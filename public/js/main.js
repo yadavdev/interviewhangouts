@@ -8,7 +8,7 @@ $(function(){ //Initialise codemirror with options
 
 });
 
-// Compatibility shim
+/*// Compatibility shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 // PeerJS object
@@ -100,4 +100,4 @@ function step3 (call) {
         var theirvideolarge = document.getElementById("their-video-large");
         theirvideolarge.src = theirvideosmall.src;
         theirvideolarge.autoplay = true;
-    }
+    }*/
