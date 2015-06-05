@@ -61,6 +61,7 @@ body{
 .editor-div{
     overflow: auto;
     padding: 20px 20px 20px 20px;
+    border-right:solid 3px darkgrey;
 }
 .editor_option_row{
     padding-left: 30px;
