@@ -1,11 +1,11 @@
-
-$(function(){
+$(function(){ //Initialise codemirror with options
     var editor = CodeMirror.fromTextArea(document.getElementById("editor-area"), {
         lineNumbers: true,
         theme:"ambiance",
         styleActiveLine: true,
         matchBrackets: true
     });
+
 });
 
 // Compatibility shim
@@ -32,6 +32,7 @@ peer.on('error', function(err){
 
 // Click handlers setup
 $(function(){
+
     $('#make-call').click(function(){
         // Initiate a call!
         var call = peer.call($('#callto-id').val(), window.localStream);
@@ -88,3 +89,15 @@ function step3 (call) {
     $('#step1, #step2').hide();
     $('#step3').show();
 }
+
+    function vidfunctn() {
+        var myvideosmall = document.getElementById("my-video");
+        var myvideolarge = document.getElementById("my-video-large");
+        myvideolarge.src = myvideosmall.src;
+        myvideolarge.autoplay = true;
+
+        var theirvideosmall = document.getElementById("their-video");
+        var theirvideolarge = document.getElementById("their-video-large");
+        theirvideolarge.src = theirvideosmall.src;
+        theirvideolarge.autoplay = true;
+    }
