@@ -24,7 +24,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link rel="stylesheet"  type="text/css" href="./css/codemirror.css">
     <link rel="stylesheet"  type="text/css" href="./css/theme/ambiance.css">
-    <script src="js/codemirror.js"></script>
+    <script src="./js/codemirror.js"></script>
 
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/bootstrap-select.min.js"></script>
@@ -35,6 +35,62 @@
 <div class="header-fixed-top container" ><h3 class="h3">InterviewHangouts  <span class="glyphicon glyphicon-phone-alt"></span></h3></div>
 <div class="col-md-12"><hr></div>
 
+<div class="container-fluid">
+	<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editorModal">Open Editor Options</button>
+	<!-- Modal -->
+    <div id="editorModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Select Editor Options</h4>
+                    </div>
+
+                        <div class="row editor_option_row"><h4>Language:</h4></div>
+                            <select class="selectpicker" data-width="30%">
+                                <option>Javascript</option>
+                                <option>C++</option>
+                                <option>C</option>
+                                <option>HTML</option>
+                                <option>Python</option>
+                                <option>Java</option>
+                                <option>PHP</option>
+                                <option>ADA</option>
+                                <option>Ruby</option>
+                                <option>C#</option>
+                                <option>Scala</option>
+                                <option>Haskell</option>
+                            </select>
+
+                        <div class="row editor_option_row"><h4>Font:</h4></div>
+                            <select class="selectpicker" data-width="30%" >
+                                <option value="8">8px</option>
+                                <option value="9">9px</option>
+                                <option value="10">10px</option>
+                                <option value="11">11px</option>
+                                <option value="12">12px</option>
+                                <option value="13">13px</option>
+                                <option value="14">14px</option>
+                                <option value="14">15px</option>
+                                <option value="14">16px</option>
+                            </select>
+
+                        <div class="row editor_option_row"><h4>Key-Binding:</h4></div>
+                            <select class="selectpicker" data-width="30%">
+                                <option>Sublime Text</option>
+                                <option>Vim</option>
+                                <option>Emacs</option>
+                            </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
 <div class="container-fluid">
 
 		<div class="row">
