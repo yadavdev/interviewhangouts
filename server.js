@@ -26,8 +26,8 @@ io.on('connection', function(socket){
     });
 
     socket.on('chatmsg', function(msg){
-      socket.broadcast.to(socket.room).emit('chatmsg', msg.msg);
-      console.log('%s: %s', socket.room, msg.msg);
+      socket.broadcast.to(socket.room).emit('chatmsg', msg);
+      console.log('%s: %s', socket.room, msg);
    });
 
     socket.on('Edit_Request', function(msg){

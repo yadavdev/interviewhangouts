@@ -6,7 +6,7 @@ $(function(){ //Initialise codemirror with options
         matchBrackets: true
     });
 
-    var socket = io();
+    socket = io();
     var myroom = window.location.pathname;
     var user = prompt("Please Enter Your Name","");
     
@@ -25,16 +25,6 @@ $(function(){ //Initialise codemirror with options
 
                   editor.setValue(msg);
       });
-
-    function send_chat(){
-
-    socket.emit('chatmsg', {'room':myroom, 'msg': document.getElementById('btn-input').value});
-
-     document.getElementById('btn-input').value='';   
-  
-  }
-
-
 
 });
 
@@ -132,4 +122,8 @@ function step3 (call) {
         theirvideolarge.autoplay = true;
     }*/
 
-
+    function hello(){
+        socket.emit('chatmsg', document.getElementById('btn-input').value);
+        document.getElementById('btn-input').value='';   
+  
+  }
