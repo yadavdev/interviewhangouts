@@ -22,7 +22,8 @@ $(function(){ //Initialise codemirror with options
       });  
     
       socket.on("Edit_Response", function(msg){
-                  editor1.setValue(msg);
+
+                  editor.setValue(msg);
       });
 
     function send_chat(){

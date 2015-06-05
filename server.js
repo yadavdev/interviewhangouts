@@ -5,6 +5,12 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public/'));
 
+app.get('/:roomName', function(req, res){
+  console.log(req.params.roomName);
+  activeChat=req.params.roomName;
+  res.sendFile(__dirname +'/public/index.html');
+});
+
 io.on('connection', function(socket){
    console.log('a user connected');
   
@@ -14,11 +20,9 @@ io.on('connection', function(socket){
     });
 
     socket.on('addToRoom', function (roomName){
-      socket.room = roomName;
-      console.log(socket.room);
-      socket.join(roomName);
-
-      console.log('Added to room: %s',roomName);
+      socket.room = roomName.room;
+      console.log("user %s added to room %s", roomName.user,roomName.room);
+      socket.join(socket.room);
     });
 
     socket.on('chatmsg', function(msg){
@@ -32,12 +36,7 @@ io.on('connection', function(socket){
       console.log('Response Sent');
     });
 
-
-
-
-
-
-
+});
 
 http.listen((process.env.PORT || 8000), function(){
   console.log('listening on port: %s', 8000);
