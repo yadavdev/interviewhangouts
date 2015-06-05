@@ -26,6 +26,12 @@ io.on('connection', function(socket){
       console.log('%s: %s', socket.room, msg.msg);
    });
 
+    socket.on('Edit_Request', function(msg){
+      console.log('Editor request recieved');
+      socket.broadcast.to(socket.room).emit('Edit_Response', msg);
+      console.log('Response Sent');
+    });
+
 
 
 
