@@ -7,7 +7,7 @@ $(function(){ //Initialise codemirror with options
     });
 
 });
-
+ var socket = io();
 /*// Compatibility shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
@@ -101,3 +101,6 @@ function step3 (call) {
         theirvideolarge.src = theirvideosmall.src;
         theirvideolarge.autoplay = true;
     }*/
+
+
+    
