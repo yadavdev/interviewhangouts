@@ -1,0 +1,28 @@
+{
+  "name": "InterviewHangouts",
+  "version": "0.1.0",
+  "description": "A simple web app using nodejs socket.io bootstrap jquery peerjs codemirror & express for helping in the interview process.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+     "express": "~4.10.2",
+    "socket.io": "~1.3.5",
+  },
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heroku/node-js-getting-started"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "codemirror",
+    "bootstrap",
+    "socket.io"
+  ],
+  "license": "MIT"
+}
