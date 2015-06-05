@@ -27,9 +27,9 @@ $(function(){ //Initialise codemirror with options
 
     function send_chat(){
 
-    socket.emit('chatmsg', {'room':myroom, 'msg': user+": "+document.getElementById('m').value});
+    socket.emit('chatmsg', {'room':myroom, 'msg': document.getElementById('btn-input').value});
 
-     document.getElementById('m').value='';   
+     document.getElementById('btn-input').value='';   
   
   }
 
