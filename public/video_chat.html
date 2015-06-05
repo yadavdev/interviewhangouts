@@ -9,11 +9,10 @@
     <title>InterviewHangouts</title>
 
     <!--Scripts and Stylesheets-->
-
+    <link href="./css/main.css" rel="stylesheet">
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="./css/style.css" rel="stylesheet">
-    
+        
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -95,13 +94,58 @@
 
 <div class="container-fluid">
 
-		<div class="row">
-		    <div class="col-md-7 editor-div">
+	<div class="row">
+		<div class="col-md-7 editor-div">
 <textarea id="editor-area" rows="200" >
 </textarea>
 			</div>
-		</div>
+	</div>
+
+	        <!-- Video area -->
+	    <div class="col-md-3" id="video-container">
+	        
+	        <video id="their-video" autoplay></video>
+	        
+	        <div class="btn-group">
+	        <a href="#" class="pure-button pure-button-info" data-toggle="modal" onclick="vidfunctn();" data-target="#videoModal">Large Screen</a>
+	        </div>
+	            <video class="pull-left" id="my-video" muted="true" autoplay>lol</video>
+	    </div>
+
+	    <!-- Steps -->
+	    <div class="col-md-2">
+	        <!-- Get local audio/video stream -->
+	        <div id="step1">
+	            <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
+	            <div id="step1-error">
+	                <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
+	                <a href="#" class="btn btn-danger" id="step1-retry">Try again</a>
+	            </div>
+	        </div>
+
+	        <!-- Make calls to others -->
+	        <div id="step2">
+	            <p>Your id: <span id="my-id">...</span></p>
+	            <p>Share this id with others so they can call you.</p>
+	            <h3>Make a call</h3>
+	            <div class="form-group">
+	                <input type="text" placeholder="Call user id..." id="callto-id">
+	                <a href="#" class="btn btn-success" id="make-call">Call</a>
+	            </div>
+	        </div>
+
+	        <!-- Call in progress -->
+	        <div id="step3">
+	            <p>Currently in call with <span id="their-id">...</span></p>
+	            <p><a href="#" class="btn btn-danger" id="end-call">End call</a></p>
+	        </div>
+	    </div>
+
 </div>
+
+
+
+
 		          
 <script>
     var editor = CodeMirror.fromTextArea(document.getElementById("editor-area"), {
