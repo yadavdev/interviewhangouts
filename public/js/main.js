@@ -6,8 +6,37 @@ $(function(){ //Initialise codemirror with options
         matchBrackets: true
     });
 
+    var socket = io();
+    var myroom = window.location.pathname;
+    var user = prompt("Please Enter Your Name","");
+    
+    while (user == ""){
+        user = prompt("Please Enter Your Name","");
+    }
+    myroom = myroom.slice(1);
+      
+    socket.emit('addToRoom',{'room':myroom, 'user':user});
+      
+      editor.on("keyup", function(){
+            socket.emit('Edit_Request',editor.getValue());
+      });  
+    
+      socket.on("Edit_Response", function(msg){
+                  editor1.setValue(msg);
+      });
+
+    function send_chat(){
+
+    socket.emit('chatmsg', {'room':myroom, 'msg': user+": "+document.getElementById('m').value});
+
+     document.getElementById('m').value='';   
+  
+  }
+
+
+
 });
- var socket = io();
+
 /*// Compatibility shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
@@ -103,4 +132,3 @@ function step3 (call) {
     }*/
 
 
-    
