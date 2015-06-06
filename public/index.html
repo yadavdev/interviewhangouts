@@ -27,6 +27,7 @@
     <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="./js/codemirror.js"></script>
+    <script src="./js/mode/clike.js"></script>
 	<script src="./js/addons/active-line.js"></script>
     <script src="./js/addons/matchbrackets.js"></script>
     <script src="./js/bootstrap.min.js"></script>
@@ -56,38 +57,39 @@
 
                         <div class="row editor_option_row"><h4>Language:</h4></div>
                             <select class="selectpicker" data-width="30%">
-                                <option>Javascript</option>
-                                <option>C++</option>
-                                <option>C</option>
-                                <option>HTML</option>
-                                <option>Python</option>
-                                <option>Java</option>
-                                <option>PHP</option>
-                                <option>ADA</option>
-                                <option>Ruby</option>
-                                <option>C#</option>
-                                <option>Scala</option>
-                                <option>Haskell</option>
+                                
+                                <option class="mode_language" selected value="c">C</option>
+                                <option class="mode_language" value="c#">C#</option>
+                                <option class="mode_language" value="cpp">C++</option>
+                                <option class="mode_language" value="java">Java</option>
+                                <option class="mode_language" value="javascript">Javascript</option> 
+                                <option class="mode_language" value="haskell">Haskell</option>    
+                                <option class="mode_language" value="html mixed">HTML mixed</option>
+                                <option class="mode_language" value="php">PHP</option>
+                                <option class="mode_language" value="python">Python</option>
+                                <option class="mode_language" value="ruby">Ruby</option>
+                                <option class="mode_language" value="scala">Scala</option>
+                                
                             </select>
 
                         <div class="row editor_option_row"><h4>Font:</h4></div>
                             <select class="selectpicker" data-width="30%" >
-                                <option value="8">8px</option>
-                                <option value="9">9px</option>
-                                <option value="10">10px</option>
-                                <option value="11">11px</option>
-                                <option value="12">12px</option>
-                                <option value="13">13px</option>
-                                <option value="14">14px</option>
-                                <option value="14">15px</option>
-                                <option value="14">16px</option>
+                                <option class="font_size" value="8">8px</option>
+                                <option class="font_size" value="9">9px</option>
+                                <option class="font_size" value="10">10px</option>
+                                <option class="font_size" value="11">11px</option>
+                                <option class="font_size" value="12">12px</option>
+                                <option class="font_size" value="13">13px</option>
+                                <option class="font_size" selected value="14">14px</option>
+                                <option class="font_size" value="15">15px</option>
+                                <option class="font_size" value="16">16px</option>
                             </select>
 
                         <div class="row editor_option_row"><h4>Key-Binding:</h4></div>
                             <select class="selectpicker" data-width="30%">
-                                <option>Sublime Text</option>
-                                <option>Vim</option>
-                                <option>Emacs</option>
+                                <option class="mode_keymap" selected value="sublime">Sublime Text</option>
+                                <option class="mode_keymap" value="vim">Vim</option>
+                                <option class="mode_keymap" value="emacs">Emacs</option>
                             </select>
                     </div>
                 </div>

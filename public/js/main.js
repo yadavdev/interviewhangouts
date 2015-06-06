@@ -3,7 +3,8 @@ $(function(){ //Initialise codemirror with options
         lineNumbers: true,
         theme:"ambiance",
         styleActiveLine: true,
-        matchBrackets: true
+        matchBrackets: true,
+        mode: "text/x-csrc"
     });
 
     socket = io();
@@ -142,4 +143,9 @@ function send_chat(){
         var scrolltoh = $('.panel-body')[0].scrollHeight;
                     $('.panel-body').scrollTop(scrolltoh);
 
+}
+
+function editor_opt (parameter) {
+    
+    
 }
