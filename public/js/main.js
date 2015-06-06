@@ -9,8 +9,7 @@ $(function(){ //Initialise codemirror with options
 
     socket = io();
     var myroom = window.location.pathname;
-     //user = prompt("Please Enter Your Name","");
-    user="lolwa";
+    user = prompt("Please Enter Your Name","");
     while (user == ""){
         user = prompt("Please Enter Your Name","");
     }
