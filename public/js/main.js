@@ -153,7 +153,28 @@ $(function(){ //Initialise codemirror with options
 
       });
 
-       $('.code-run-div').BootSideMenu({side:"right", autoClose:false});
+      $(".code_submit").on("click",function(){
+                        var input = $(".code_input").val();
+                        //alert(input);
+                         var postTo = 'http://api.hackerrank.com/checker/submission.json';
+
+                        $.ajax(postTo, {
+                            type:"POST",
+                            dataType:"json",
+                            data:{
+                                "api_key":"hackerrank|512113-236|9a712ba2bb48d0fee708fc1315ba0f22033574d2",
+                                "format": "json",
+                                "lang": 5,
+                                "source": "print '1'",
+                                "testcases": "[\"This is input 1\"]",
+                                "wait": true
+                              },
+                           success:function(data, textStatus, jqXHR) {alert("success");},
+                            error: function(jqXHR, textStatus, errorThrown) {alert("failure");}
+});
+
+
+      });
 
 }); 
 
