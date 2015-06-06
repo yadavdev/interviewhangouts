@@ -32,8 +32,8 @@ $(function(){ //Initialise codemirror with options
 
           var scrolltoh = $('.panel-body')[0].scrollHeight;
                     $('.panel-body').scrollTop(scrolltoh);
-         // var audio1 = document.getElementById('sound1');
-          //    audio1.play();   
+          var audio = $('sound_chat');
+              audio.play();   
             
 
         }); 
