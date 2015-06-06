@@ -8,7 +8,7 @@ $(function(){ //Initialise codemirror with options
 
     socket = io();
     var myroom = window.location.pathname;
-    var user = prompt("Please Enter Your Name","");
+     user = prompt("Please Enter Your Name","");
     
     while (user == ""){
         user = prompt("Please Enter Your Name","");
@@ -121,9 +121,11 @@ function step3 (call) {
         theirvideolarge.src = theirvideosmall.src;
         theirvideolarge.autoplay = true;
     }*/
+function send_chat(){
+        socket.emit('chatmsg', document.getElementById('btn-input').value); 
+        var d = new Date;
+        var chatmsg ='<li class=" clearfix"><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+user+'</strong></div><p class="text-left">'+document.getElementById('btn-input').value+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
+        $(".chat").append(chatmsg);
+        document.getElementById('btn-input').value='';
 
-    function hello(){
-        socket.emit('chatmsg', document.getElementById('btn-input').value);
-        document.getElementById('btn-input').value='';   
-  
-  }
+}
