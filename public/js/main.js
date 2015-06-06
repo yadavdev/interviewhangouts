@@ -136,7 +136,7 @@ function step3 (call) {
 function send_chat(){
         socket.emit('chatmsg', document.getElementById('btn-input').value); 
         var d = new Date;
-        var chatmsg ='<li class="clearfix"><div class="chat-body clearfix"><div class="header clearfix"><strong class="pull-right primary-font">'+user+'</strong></div><p class="text-right">'+document.getElementById('btn-input').value+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
+        var chatmsg ='<li class="clearfix"><div class="chat-body clearfix"><div class="header clearfix"><strong class="pull-right primary-font">'+user+'</strong></div><p class="text-left">'+document.getElementById('btn-input').value+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
         $(".chat").append(chatmsg);
         document.getElementById('btn-input').value='';
         var scrolltoh = $('.panel-body')[0].scrollHeight;
