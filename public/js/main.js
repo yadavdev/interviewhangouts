@@ -37,7 +37,94 @@ $(function(){ //Initialise codemirror with options
               audio.play();   
             
 
-        }); 
+        });
+
+    $( ".editor_language" ).change(function() {
+            if($(".editor_language").val() == "cpp"){
+               $.getScript("./js/mode/clike.js", function(){
+                                 editor.setOption("mode","text/x-c++src");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "c#"){
+               $.getScript("./js/mode/clike.js", function(){
+                                editor.setOption("mode","text/x-objectivec");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "c"){
+               $.getScript("./js/mode/clike.js", function(){
+                         editor.setOption("mode","text/x-csrc");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "java"){
+               $.getScript("./js/mode/clike.js", function(){
+                                 editor.setOption("mode","text/x-java");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "haskell"){
+               $.getScript("./js/mode/haskell.js", function(){
+                                 editor.setOption("mode","haskell");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "scala"){
+               $.getScript("./js/mode/clike.js", function(){
+                                editor.setOption("mode","text/x-scala");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "html mixed"){
+                $.getScript("./js/mode/xml.js", function(){ });
+                $.getScript("./js/mode/javascript.js", function(){});
+                $.getScript("./js/mode/css.js", function(){});
+                $.getScript("./js/mode/vbscript.js", function(){});
+                 var mixedMode = {
+                    name: "htmlmixed",
+                    scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+                       mode: null},
+                      {matches: /(text|application)\/(x-)?vb(a|script)/i,
+                       mode: "vbscript"}]
+                };
+
+                $.getScript("./js/mode/htmlmixed.js", function(){
+                                 editor.setOption("mode","mixedMode");
+                               // alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "php"){
+                $.getScript("./js/mode/xml.js", function(){ });
+                $.getScript("./js/mode/javascript.js", function(){ });
+                $.getScript("./js/mode/css.js", function(){ });
+                $.getScript("./js/mode/htmlmixed.js", function(){ });
+                $.getScript("./js/mode/clike.js", function(){ });
+                $.getScript("./js/mode/php.js", function(){
+                                editor.setOption("mode", "application/x-httpd-php");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "python"){
+               $.getScript("./js/mode/python.js", function(){
+                                editor.setOption("mode", "python");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "ruby"){
+               $.getScript("./js/mode/ruby.js", function(){
+                                editor.setOption("mode","text/x-ruby");
+                                //alert("Script loaded and executed.");
+                });
+            }
+            else if($(".editor_language").val() == "javascript"){
+               $.getScript("./js/mode/javascript.js", function(){
+                               editor.setOption("mode","javascript");
+                                //alert("Script loaded and executed.");
+                });
+            }
+        
+}); 
 
 });
 
@@ -58,7 +145,7 @@ peer.on('call', function(call){
     step3(call);
 });
 peer.on('error', function(err){
-    alert(err.message);
+    //alert(err.message);
     // Return to step 2 if error occurs
     step2();
 });
@@ -143,9 +230,4 @@ function send_chat(){
         var scrolltoh = $('.panel-body')[0].scrollHeight;
                     $('.panel-body').scrollTop(scrolltoh);
 
-}
-
-function editor_opt (parameter) {
-    
-    
 }
