@@ -81,27 +81,27 @@ $(function(){ //Initialise codemirror with options
                 $.getScript("./js/mode/javascript.js", function(){});
                 $.getScript("./js/mode/css.js", function(){});
                 $.getScript("./js/mode/vbscript.js", function(){});
-                 var mixedMode = {
+                $.getScript("./js/mode/htmlmixed.js", function(){});
+                var mixedMode = {
                     name: "htmlmixed",
                     scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
                        mode: null},
                       {matches: /(text|application)\/(x-)?vb(a|script)/i,
                        mode: "vbscript"}]
                 };
-
-                $.getScript("./js/mode/htmlmixed.js", function(){
-                                 editor.setOption("mode","mixedMode");
+                                 editor.setOption("mode",mixedMode);
                                // alert("Script loaded and executed.");
-                });
             }
             else if($(".editor_language").val() == "php"){
+                $.getScript("./js/mode/htmlmixed.js", function(){ });
                 $.getScript("./js/mode/xml.js", function(){ });
                 $.getScript("./js/mode/javascript.js", function(){ });
                 $.getScript("./js/mode/css.js", function(){ });
-                $.getScript("./js/mode/htmlmixed.js", function(){ });
                 $.getScript("./js/mode/clike.js", function(){ });
                 $.getScript("./js/mode/php.js", function(){
                                 editor.setOption("mode", "application/x-httpd-php");
+                                editor.setOption("indentUnit", 4);
+                                editor.setOption("indentWithTabs", true);
                                 //alert("Script loaded and executed.");
                 });
             }
@@ -124,9 +124,36 @@ $(function(){ //Initialise codemirror with options
                 });
             }
         
-}); 
+    }); 
 
-});
+     $( ".editor_keymap" ).change(function() {
+            if($(".editor_keymap").val() == "sublime"){
+               $.getScript("./js/mode/sublime.js", function(){
+                               editor.setOption("keyMap","sublime");
+                                //alert("Script loaded and executed.");
+                });
+            } else  if($(".editor_keymap").val() == "vim"){
+               $.getScript("./js/mode/vim.js", function(){
+                               editor.setOption("keyMap","vim");
+                                //alert("Script loaded and executed.");
+                });
+            } else  if($(".editor_keymap").val() == "emacs"){
+               $.getScript("./js/mode/emacs.js", function(){
+                               editor.setOption("keyMap","emacs");
+                                //alert("Script loaded and executed.");
+                });
+            }
+        
+
+
+     });
+
+      $( ".editor_font" ).change(function() {
+                $(".CodeMirror").css("font-size",$(".editor_font").val() +"px");
+
+      });
+
+}); 
 
 /*// Compatibility shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
