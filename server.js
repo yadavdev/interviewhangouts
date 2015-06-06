@@ -21,13 +21,14 @@ io.on('connection', function(socket){
 
     socket.on('addToRoom', function (roomName){
       socket.room = roomName.room;
-      console.log("user %s added to room %s", roomName.user,roomName.room);
+      socket.user = roomName.user;
+      console.log("user %s added to room %s", socket.user,roomName.room);
       socket.join(socket.room);
     });
 
     socket.on('chatmsg', function(msg){
       socket.broadcast.to(socket.room).emit('chatmsg', msg);
-      console.log('%s: %s', socket.room, msg);
+      console.log('%s: user %s says, %s', socket.room,socket.user, msg);
    });
 
     socket.on('Edit_Request', function(msg){
