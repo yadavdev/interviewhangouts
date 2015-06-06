@@ -32,7 +32,7 @@ $(function(){ //Initialise codemirror with options
 
           var scrolltoh = $('.panel-body')[0].scrollHeight;
                     $('.panel-body').scrollTop(scrolltoh);
-          var audio = $('sound_chat');
+          var audio = document.getElementById('sound_chat');
               audio.play();   
             
 
