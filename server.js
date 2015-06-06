@@ -27,7 +27,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('chatmsg', function(msg){
-      socket.broadcast.to(socket.room).emit('chatmsg', msg);
+      socket.broadcast.to(socket.room).emit('chatmsg',{"user":socket.user,"msg":msg});
       console.log('%s: user %s says, %s', socket.room,socket.user, msg);
    });
 
