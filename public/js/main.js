@@ -9,8 +9,8 @@ $(function(){ //Initialise codemirror with options
 
     socket = io();
     var myroom = window.location.pathname;
-     user = prompt("Please Enter Your Name","");
-    
+     //user = prompt("Please Enter Your Name","");
+    user="lolwa";
     while (user == ""){
         user = prompt("Please Enter Your Name","");
     }
@@ -152,6 +152,8 @@ $(function(){ //Initialise codemirror with options
                 $(".CodeMirror").css("font-size",$(".editor_font").val() +"px");
 
       });
+
+       $('.code-run-div').BootSideMenu({side:"right", autoClose:false});
 
 }); 
 
