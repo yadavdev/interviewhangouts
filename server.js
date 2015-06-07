@@ -13,11 +13,6 @@ app.all('/', function(req, res, next) {
 app.use(express.static(__dirname + '/public/'));
 
 
-app.post('/', function(req, res, next) {
- // Handle the post for this route
- console.log("fuckme");
-});
-
 
 app.get('/:roomName', function(req, res){
   console.log(req.params.roomName);
