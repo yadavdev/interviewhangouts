@@ -153,13 +153,13 @@ $(function(){ //Initialise codemirror with options
       });
 
       $(".code_submit").on("click",function(){
-              // $('.code_submit').buttonLoader('start');
+               $('.code_submit').buttonLoader('start');
                 socket.emit('test_code',{'src':editor.getValue(), 'inp': $(".code_input").val(), 'lang':5}); 
                 socket.on("result", function(msg){
                    // alert("recieved.\n" + msg.cmpinfo + "\n"+msg.output);
                         // var out= "#Compilation#:\n" +msg.cmpinfo + "\n#Output#:\n" + msg.output;
                          //$(".code_output").val(out);
-                        // $('.code_submit').buttonLoader('stop');
+                         $('.code_submit').buttonLoader('stop');
                 });
                 });
 
