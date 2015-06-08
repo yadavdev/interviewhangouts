@@ -6,13 +6,14 @@ $(function(){ //Initialise codemirror with options
         matchBrackets: true,
         mode: "text/x-csrc"
     });
-
+    $(".code_output").val("#Output will be displayed here.#");
+    $(".code_output").prop('disabled', true);
     socket = io();
     var myroom = window.location.pathname;
-    user = prompt("Please Enter Your Name","");
-    while (user == ""){
-        user = prompt("Please Enter Your Name","");
-    }
+    user = "helowa";//prompt("Please Enter Your Name","");
+    //while (user == ""){
+    //    user = prompt("Please Enter Your Name","");
+    //}
     myroom = myroom.slice(1);
       
     socket.emit('addToRoom',{'room':myroom, 'user':user});
@@ -154,18 +155,26 @@ $(function(){ //Initialise codemirror with options
 
       $(".code_submit").on("click",function(){
                $('.code_submit').buttonLoader('start');
-                socket.emit('test_code',{'src':editor.getValue(), 'inp': $(".code_input").val(), 'lang':5}); 
+               $(".code_output").prop('disabled', true);
+               $(".code_input").prop('disabled', true);
+                try{
+                socket.emit('test_code',{'src':editor.getValue(), 'inp': $(".code_input").val(), 'lang':$(".editor_language option:selected").attr("data-langid")}); 
+                
                 socket.on("result", function(msg){
-                   // alert("recieved.\n" + msg.cmpinfo + "\n"+msg.output);
-                        // var out= "#Compilation#:\n" +msg.cmpinfo + "\n#Output#:\n" + msg.output;
-                         //$(".code_output").val(out);
+                         var out= "Compilation Msg#:\n" +msg.result.compilemessage + "\nTime#:\n" + msg.result.time+"\n#Output#:\n" + msg.result.stdout;
+                         $(".code_output").val(out);
                          $('.code_submit').buttonLoader('stop');
+                         $(".code_output").prop('disabled', false);
+                         $(".code_input").prop('disabled', false); 
                 });
-                });
+                }
+                catch(err){ alert("An error Occurred:\n" + err.message + "\nPlease reload page or try again.");    
+                    }
+            });
 
 }); 
 
-// Compatibility shim
+/*// Compatibility shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 // PeerJS object
@@ -268,3 +277,4 @@ function send_chat(){
                     $('.panel-body').scrollTop(scrolltoh);
 
 }
+*/
