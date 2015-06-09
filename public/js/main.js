@@ -38,6 +38,18 @@ $(function(){ //Initialise codemirror with options
             
 
         });
+    socket.on("result", function(msg){
+                         $('.code_submit').buttonLoader('stop');
+                         $(".code_output").prop('disabled', false);
+                         $(".code_input").prop('disabled', false);
+                        try{
+                         var out= "Compilation Msg#:\n" +msg.result.compilemessage + "\nTime#:\n" + msg.result.time+"\n#Output#:\n" + msg.result.stdout;
+                         $(".code_output").val(out);
+                         }
+                         catch(err){
+                            alert("Server side error.\nPlease retry or reload the page.\n Error:\n"+ err.message +"\nNote: There is a problem with 'scanf' function in c/c++.\n If you are using it please use cin instead for now." );
+                         }
+                    }); 
 
     $( ".editor_language" ).change(function() {
             if($(".editor_language").val() == "cpp"){
@@ -157,19 +169,20 @@ $(function(){ //Initialise codemirror with options
                $('.code_submit').buttonLoader('start');
                $(".code_output").prop('disabled', true);
                $(".code_input").prop('disabled', true);
-                try{
-                socket.emit('test_code',{'src':editor.getValue(), 'inp': $(".code_input").val(), 'lang':$(".editor_language option:selected").attr("data-langid")}); 
                 
-                socket.on("result", function(msg){
-                         var out= "Compilation Msg#:\n" +msg.result.compilemessage + "\nTime#:\n" + msg.result.time+"\n#Output#:\n" + msg.result.stdout;
-                         $(".code_output").val(out);
-                         $('.code_submit').buttonLoader('stop');
-                         $(".code_output").prop('disabled', false);
-                         $(".code_input").prop('disabled', false); 
-                });
-                }
-                catch(err){ alert("An error Occurred:\n" + err.message + "\nPlease reload page or try again.");    
+                try{
+                
+                    socket.emit('test_code',{'src':editor.getValue(), 'inp': $(".code_input").val(), 'lang':$(".editor_language option:selected").attr("data-langid")}); 
+                //TODO Problem with c code on server side.                    
                     }
+                catch(err){ alert("An error Occurred:\n" + err.message + "\nPlease reload page or try again.");
+
+                            $('.code_submit').buttonLoader('stop');
+                            $(".code_output").prop('disabled', false);
+                            $(".code_input").prop('disabled', false); 
+    
+                    }
+
             });
 
 }); 

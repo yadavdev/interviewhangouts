@@ -3,16 +3,8 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var unirest = require('unirest');
-app.all('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS'); 
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
- });
 
 app.use(express.static(__dirname + '/public/'));
-
-
 
 app.get('/:roomName', function(req, res){
   console.log(req.params.roomName);
@@ -48,8 +40,9 @@ io.on('connection', function(socket){
 
     socket.on('test_code', function(msg){
           console.log("code check request received.")
-           unirest.post("https://api.hackerrank.com/checker/submission.json")
-          .strictSSL(false)
+          console.log(msg.src);
+           unirest.post("http://api.hackerrank.com/checker/submission.json")
+          //.strictSSL(false)
           .header("Content-Type", "application/x-www-form-urlencoded")
           .header("Accept", "application/json")
           .send("format=json")
@@ -60,7 +53,7 @@ io.on('connection', function(socket){
           .send("api_key=")
           .end(function (result) {
             console.log(result.body);
-            io.sockets.in(socket.room).emit("result",result);
+            io.sockets.in(socket.room).emit("result",result.body);
           });
 
       });
