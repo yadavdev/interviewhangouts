@@ -24,7 +24,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link rel="stylesheet"  type="text/css" href="./css/codemirror.css">
     <link rel="stylesheet"  type="text/css" href="./css/theme/ambiance.css">
-    <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
+   <!-- <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script> -->
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="./js/codemirror.js"></script>
     <script src="./js/mode/clike.js"></script>
@@ -43,21 +43,7 @@
 
 <div class="container-fluid">
 	<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editorModal">Open Editor Options</button>
-    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#codeModal" style="background-color:#333; border-color:#333">Run Code <span class="glyphicon glyphicon-chevron-right"></span></button>
-	<!-- Modal -->
-    <div id="editorModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Select Editor Options</h4>
-                    </div>
-
-                        <div class="row editor_option_row"><h4>Language:</h4></div>
-                            <select class="selectpicker editor_language" data-width="30%">
+    <select class="selectpicker editor_language" data-width="auto">
                                 
                                 <option class="mode_language" data-langid="1"selected value="c">C</option>
                                 <option class="mode_language" data-langid="9"value="c#">C#</option>
@@ -72,7 +58,18 @@
                                 <option class="mode_language" data-langid="15"value="scala">Scala</option>
                                 
                             </select>
+    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#codeModal" style="background-color:#333; border-color:#333">Run Code <span class="glyphicon glyphicon-chevron-right"></span></button>
+	<!-- Modal -->
+    <div id="editorModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Select Editor Options</h4>
+                    </div>
                         <div class="row editor_option_row"><h4>Font:</h4></div>
                             <select class="selectpicker editor_font" data-width="30%" >
                                 <option class="font_size" value="8">8px</option>
