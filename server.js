@@ -14,7 +14,7 @@ app.get('/:roomName', function(req, res){
 
 
 io.on('connection', function(socket){
-    //console.log('a user connected');
+    console.log('a user connected');
      
     socket.on('disconnect', function(){
       socket.leave(socket.room);
@@ -25,6 +25,7 @@ io.on('connection', function(socket){
       if(rooms[socket.room].num_users === 0){
         delete rooms[socket.room];
       }
+      socket.broadcast.to(socket.room).emit('usr_disconnect', socket.user);
 
 
     });
@@ -33,18 +34,15 @@ io.on('connection', function(socket){
       socket.room = roomName.room;
       socket.user = roomName.user;
       
-
       var flag=0; //NOTE: No raising race condition now
       for( var key in rooms ) {
         if( key === socket.room ){
-            console.log("Room Exists: "); 
-            console.log(rooms[key]);
+            //console.log("Room Exists: "); 
+            //console.log(rooms[key]);
             flag=1;
             break;
         }
-
       }
-      //console.log("flag: "+flag);
 
       if(flag === 0){
         rooms[socket.room] = {
@@ -59,8 +57,8 @@ io.on('connection', function(socket){
         rooms[socket.room].user_array.push(socket.user);
       }
         socket.join(socket.room);
-
-        console.log(socket.room +": "+rooms[socket.room].num_users +": " + rooms[socket.room].user_array);
+        socket.broadcast.to(socket.room).emit('usr_connect', socket.user);
+        //console.log(socket.room +": "+rooms[socket.room].num_users +": " + rooms[socket.room].user_array);
       
       });
 
