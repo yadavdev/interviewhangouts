@@ -49,7 +49,7 @@ io.on('connection', function(socket){
           .header("Accept", "application/json")
           .send("format=json")
           .send("lang="+ msg.lang)
-          .send("source=" + msg.src)
+          .send("source=" + encodeURIComponent(msg.src))
           .send('testcases=["'+ msg.inp +'"]')
           .send("wait=true")
           .send("api_key=")
