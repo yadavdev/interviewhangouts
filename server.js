@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var unirest = require('unirest');
-var rooms={};
+var rooms=[];
 
 app.use(express.static(__dirname + '/public/'));
 
@@ -14,10 +14,17 @@ app.get('/:roomName', function(req, res){
 
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    //console.log('a user connected');
      
     socket.on('disconnect', function(){
       socket.leave(socket.room);
+      var user_idx = rooms[socket.room].user_array.indexOf(socket.user);
+      rooms[socket.room].user_array.splice(user_idx,1);
+      rooms[socket.room].num_users --;
+
+      if(rooms[socket.room].num_users === 0){
+        delete rooms[socket.room];
+      }
 
 
     });
@@ -25,9 +32,37 @@ io.on('connection', function(socket){
     socket.on('addToRoom', function (roomName){
       socket.room = roomName.room;
       socket.user = roomName.user;
+      
 
-      socket.join(socket.room);
-    });
+      var flag=0; //NOTE: No raising race condition now
+      for( var key in rooms ) {
+        if( key === socket.room ){
+            console.log("Room Exists: "); 
+            console.log(rooms[key]);
+            flag=1;
+            break;
+        }
+
+      }
+      //console.log("flag: "+flag);
+
+      if(flag === 0){
+        rooms[socket.room] = {
+              name:socket.room,
+              num_users: 1,
+              user_array:[]
+        }
+      rooms[socket.room].user_array.push(socket.user);
+      }
+      else{
+        rooms[socket.room].num_users ++;
+        rooms[socket.room].user_array.push(socket.user);
+      }
+        socket.join(socket.room);
+
+        console.log(socket.room +": "+rooms[socket.room].num_users +": " + rooms[socket.room].user_array);
+      
+      });
 
     socket.on('chatmsg', function(msg){
       socket.broadcast.to(socket.room).emit('chatmsg',{"user":socket.user,"msg":msg});
