@@ -25,7 +25,7 @@ io.on('connection', function(socket){
       if(rooms[socket.room].num_users === 0){
         delete rooms[socket.room];
       }
-      socket.broadcast.to(socket.room).emit('usr_disconnect', socket.user);
+      io.sockets.in(socket.room).emit('usr_disconnect', socket.user);
 
 
     });
@@ -57,7 +57,7 @@ io.on('connection', function(socket){
         rooms[socket.room].user_array.push(socket.user);
       }
         socket.join(socket.room);
-        socket.broadcast.to(socket.room).emit('usr_connect', socket.user);
+        io.sockets.in(socket.room).emit('usr_connect', rooms[socket.room].user_array);
         //console.log(socket.room +": "+rooms[socket.room].num_users +": " + rooms[socket.room].user_array);
       
       });

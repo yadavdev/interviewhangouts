@@ -10,10 +10,12 @@ $(function(){ //Initialise codemirror with options
     $(".code_output").prop('disabled', true);
     socket = io();
     var myroom = window.location.pathname;
+   // $(".remote_usr_button").css({visibility:none});
     user = "helowa";//prompt("Please Enter Your Name","");
     //while (user == ""){
     //    user = prompt("Please Enter Your Name","");
     //}
+    $(".user_span").html("<h4>Hello <b><u>" + user + "</u> .</b></h4>" );
     myroom = myroom.slice(1);
       
     socket.emit('addToRoom',{'room':myroom, 'user':user});
@@ -38,6 +40,19 @@ $(function(){ //Initialise codemirror with options
             
 
         });
+    socket.on('usr_connect', function(remote_usr){
+            alert(remote_usr);
+            $(".remote_usr_button").css({visibility:true});
+            $(".remote_usr_button").val(user);
+
+        });
+    socket.on('usr_disconnect', function(remote_usr){
+            alert(remote_usr + " disconnected.");
+            $(".remote_usr_button").css({visibility:false});
+            $(".remote_usr_button").text(user+" disconnected");
+
+        });
+    
     socket.on("result", function(msg){
                          $('.code_submit').buttonLoader('stop');
                          $(".code_output").prop('disabled', false);
