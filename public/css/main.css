@@ -9,6 +9,9 @@
   background-color: #eee;
   border: solid 1px black;
   z-index: 4;
+  bottom:0;
+  position:absolute;
+  right:0;
 }
 #my-video-large {
   width: auto;
@@ -20,9 +23,11 @@
 
 #their-video {
   width: 100%;
-  max-height: 480px;
+  height: 100%;
   background-color: #eee;
   border: solid 1px black;
+  top:0;
+  left:0;
 }
 #their-video-large {
   width: 100%;
@@ -32,7 +37,7 @@
 }
 #video-container {
  /* margin-left:3px;*/ /*causes last col to go down*/
-  padding: 10px;
+  /*padding: 10px;*/
   text-align: center;
   background-color: lightgray ;
 }
@@ -105,7 +110,7 @@ body{
 .panel-body
 {
     overflow-y: scroll;
-    height: 250px;
+    height: 270px;
 }
 
 ::-webkit-scrollbar-track

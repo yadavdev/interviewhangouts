@@ -60,30 +60,73 @@
                                 <option class="mode_language" data-langid="15"value="scala">Scala</option>
                                 
                             </select>
-    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#codeModal" style="background-color:#333; border-color:#333">Run Code <span class="glyphicon glyphicon-chevron-right"></span></button>
+    <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#codeModal">Run Code <span class="glyphicon glyphicon-chevron-right"></span></button>
 
-    <span class="user_span pull-right"></span>
+    <span class="user_span pull-right" ></span>
 </div>
 
 	<div class="row" style="margin-right:0px">
 		<div class="col-md-6 editor-div" style="padding-top:20px;padding-left:30px">
 <textarea id="editor-area" rows="200" >
+#include <stdio.h>
+
+int main()
+{
+  int my_var;
+  my_var = 10;
+  
+  for(int i=0;i < my_var; i++)
+    printf("Hello World!\n"); 
+  
+  return 0;
+}
 </textarea>
 		</div>
 
 	        <!-- Video area -->
-	    <div class="col-md-3" id="video-container" style="margin-top:20px">
-	        
-	        <video id="their-video" autoplay></video>
-	        
-	        <div class="btn-group">
+	     <div class="col-md-4" id="video-container" style="margin-top:20px;padding-top:10px;">
+	        <div style="position:relative; height:40%">
+	           <video id="their-video" autoplay></video>
+               <div style="position:absolute; top:0;right:0; padding: 5px 5px 5px 5px;z-index:10"><a href="#" class="btn btn-info btn-xs" data-toggle="modal" onclick="vidfunctn();" data-target="#videoModal"><i class="fa fa-expand"></i></a></div>
+	           <div style="position:absolute; bottom:0;right:0">
+               <video class="" id="my-video" muted="true" autoplay>lol</video>
+               </div>
+            </div>
+
+	     <!--   <div class="btn-group">
 	        <a href="#" class="btn btn-info btn-sm" data-toggle="modal" onclick="vidfunctn();" data-target="#videoModal">Large Screen</a>
-	        </div>
-	            <video class="pull-left" id="my-video" muted="true" autoplay>lol</video>
-	    </div>
+	        </div> -->
+	            
+	        <div class="panel panel-primary" style="margin-bottom: 0px;height:60%">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-comment"></span> Chat
+            <div class="btn-group pull-right">
+             <!--   <button type="button" class="btn btn-default btn-xs">
+                    <i class="fa fa-cog"></i>
+                </button> -->
+            </div>
+        </div>
+            <div class="panel-body" >
+                <ul class="chat">
+                </ul>
+            </div>
+            <div class="panel-footer" style="padding:0px 0px 0px 0px; bottom:0;">
+                <div class="input-group">
+                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send_chat()">
+                                Send</button>
+                        </span>
+                </div>
+            </div>
+    </div>
+
+
+
+        </div>
        
 
-<div class="col-md-2 col-md-offset-1 user_box" style="background-color:#333;">
+<div class="col-md-2 user_box" style="background-color:#333;">
 
 </div>
 
@@ -192,8 +235,8 @@
         <div class="modal-content">
             <div class="modal-body" style="background-color: #31b0d5;">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><strong>InterviewHangouts</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-compress"></i></button>
+                    <h4 class="modal-title h3"><strong>InterviewHangouts</strong></h4>
                 </div>
                 <div class="large-video-container">
                 <video class="their-video-large" id="their-video-large" autoplay></video>

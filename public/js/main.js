@@ -11,11 +11,11 @@ $(function(){ //Initialise codemirror with options
     socket = io();
     var myroom = window.location.pathname;
    // $(".remote_usr_button").css({visibility:none});
-    user = "helowa";//prompt("Please Enter Your Name","");
+    user = "Devashish Yadav";//prompt("Please Enter Your Name","");
     //while (user == ""){
     //    user = prompt("Please Enter Your Name","");
     //}
-    $(".user_span").html("<h4>Hello <b><u>" + user + "</u> .</b></h4>" );
+    $(".user_span").html("<h4 class='h4' style='color:white'>Hello <b><u>" + user + "</u> .</b></h4>" );
     myroom = myroom.slice(1);
       
     socket.emit('addToRoom',{'room':myroom, 'user':user});
@@ -204,6 +204,7 @@ $(function(){ //Initialise codemirror with options
       $(".CodeMirror").css('height',req_height-30);
       $(".CodeMirror").css('border',"1px solid darkgrey");
       $(".CodeMirror-gutters").css('height',req_height-30);
+      $("#video-container").css('height',req_height-20);
      // $(".container-fluid").css('padding-right',"0px");
 
 }); 
