@@ -14,7 +14,7 @@ $(function(){ //Initialise codemirror with options
    // $(".remote_usr_button").css({visibility:none});
     user = "lol";//prompt("Please Enter Your Name","");
     // First you forcibly request the scroll bars to hidden regardless if they will be needed or not.
-    
+
     while (user == ""){
         user = prompt("Please Enter Your Name","");
     }
@@ -216,6 +216,17 @@ $(function(){ //Initialise codemirror with options
       $(".CodeMirror").css('border',"1px solid darkgrey");
       $(".CodeMirror-gutters").css('height',req_height-30);
       $("#video-container").css('height',req_height-20);
+      $( window ).resize(function() {
+              var req_height= $(window).height() - $(".page-header").outerHeight(true);
+              $(".user_box").css('height',req_height);
+              $(".CodeMirror").css('height',req_height-30);
+              $(".CodeMirror").css('border',"1px solid darkgrey");
+              $(".CodeMirror-gutters").css('height',req_height-30);
+              $("#video-container").css('height',req_height-20);    
+             // alert("height changed");
+
+
+        });
 
      $('#chatarea').keypress(function(e) {
         if (e.keyCode == 13 && !e.shiftKey && document.getElementById('chatarea').value !=="") {
