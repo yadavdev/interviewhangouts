@@ -43,13 +43,15 @@
 <div class="col-md-12"><hr></div> -->
 
 <div class="container-fluid" style="padding-left:0px">
+
 <div class="page-header col-md-12" style="background-color:#4D4D4D;border:#4D4D4D;margin-top:0px;margin-bottom:0px;  padding:20px 10px 20px 10px;box-shadow:0px 0px 15px 0px rgba(0, 0, 0, 0.4);margin-right:15px">
+    <div class="col-md-4">
 	<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editorModal">Open Editor Options</button>
     <select class="selectpicker editor_language" data-width="auto">
                                 
-                                <option class="mode_language" data-langid="1"selected value="c">C</option>
-                                <option class="mode_language" data-langid="9"value="c#">C#</option>
                                 <option class="mode_language" data-langid="2"value="cpp">C++</option>
+                                <option class="mode_language" data-langid="1" value="c">C</option>
+                                <option class="mode_language" data-langid="9"value="c#">C#</option>
                                 <option class="mode_language" data-langid="3"value="java">Java</option>
                                 <option class="mode_language" data-langid="#"value="javascript">Javascript</option> 
                                 <option class="mode_language" data-langid="12"value="haskell">Haskell</option>    
@@ -61,8 +63,14 @@
                                 
                             </select>
     <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#codeModal">Run Code <span class="glyphicon glyphicon-chevron-right"></span></button>
+    </div>
+    
+    <div class="col-md-6 form-inline">
+        <label style="color:white">Share this link to invite:&nbsp&nbsp</label><input type="text" class="form-control" id="roompath" readonly>
+    </div><
 
     <span class="user_span pull-right" ></span>
+
 </div>
 
 	<div class="row" style="margin-right:0px">
@@ -87,32 +95,24 @@ int main()
 	     <div class="col-md-4" id="video-container" style="margin-top:20px;padding-top:10px;">
 	        <div style="position:relative; height:40%">
 	           <video id="their-video" autoplay></video>
+               <button class="btn btn-warning btn-md pull-left" id="calling-peer" style="padding:5px 5px 5px 5px;z-index:100;position:absolute; margin:0;left:40%;top:50%"><i class="fa fa-phone faa-ring animated "></i>  Calling...</button>
                <div style="position:absolute; top:0;right:0; padding: 5px 5px 5px 5px;z-index:10"><a href="#" class="btn btn-dafault btn-xs" data-toggle="modal" onclick="vidfunctn();" data-target="#videoModal"><i class="fa fa-expand"></i></a></div>
 	           <div style="position:absolute; bottom:0;right:0">
                <video class="" id="my-video" muted="true" autoplay>lol</video>
                </div>
             </div>
 
-	        <div class="panel panel-primary" style="margin-bottom: 0px;height:60%;">
-        <div class="panel-heading"  style="height:10%;padding-top:0px;">
-            <span class="glyphicon glyphicon-comment"></span> Chat
-            <div class="btn-group pull-right">
-             <!--   <button type="button" class="btn btn-default btn-xs">
-                    <i class="fa fa-cog"></i>
-                </button> -->
-            </div>
+	        <div class="panel panel-primary" style="margin-bottom: 0px;height:60%; border-radius:0px 0px 0px 0px">
+        <div class="panel-heading pull-left"  style="width:100%;height:10%;padding-top:3px;border-radius:0px 0px 0px 0px">
+            <div class="pull-left" style="padding-right:5px"><span class="glyphicon glyphicon-comment"></span> Chat</div>
+            <button class="btn btn-danger btn-sm pull-right" id="end-call" style="padding:5px 5px 5px 5px"><i class="fa fa-phone"></i> End Video Call</button>
         </div>
             <div class="panel-body" style="height:75%;">
                 <ul class="chat">
                 </ul>
             </div>
-            <div class="panel-footer" style="padding:0px 0px 0px 0px; bottom:0;right:0;height:15%;overflow:none">
+            <div class="panel-footer" style="padding:0px 0px 0px 0px; bottom:0;right:0;height:15%;overflow:none;border-radius:0px 0px 0px 0px">
                 <textarea type="text" class="form-control input-sm" placeholder="Type your message here... Press ENTER to send and SHIFT+ENTER to newline." id="chatarea" style="resize:none;height:100%"></textarea>
-                   <!-- <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                        <span class="input-group-btn">
-                            <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send_chat()">
-                                Send</button>
-                        </span> -->
             </div>
     </div>
 

@@ -5,7 +5,7 @@ $(function(){ //Initialise codemirror with options
         //theme:"ambiance",
         styleActiveLine: true,
         matchBrackets: true,
-        mode: "text/x-csrc"
+        mode: "text/x-c++src"
     });
     $(".code_output").val("#Output will be displayed here.#");
     $(".code_output").prop('disabled', true);
@@ -242,6 +242,7 @@ $(function(){ //Initialise codemirror with options
         }
     });
 
+    $("#roompath").val(window.location);
 
 }); 
 
