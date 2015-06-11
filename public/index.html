@@ -36,12 +36,14 @@
     <script src="./js/main.js"></script>
 </head>
 
-<body>
+<body >
 <audio id="sound_chat" ><source src="./assets/beep.mp3" type="audio/mpeg"></audio>
-<div class="header-fixed-top container" ><h3 class="h3">InterviewHangouts  <span class="glyphicon glyphicon-phone-alt"></span></h3></div>
-<div class="col-md-12"><hr></div>
 
-<div class="container-fluid">
+<!-- <div class="header-fixed-top container" ><h3 class="h3">InterviewHangouts  <span class="glyphicon glyphicon-phone-alt"></span></h3></div>
+<div class="col-md-12"><hr></div> -->
+
+<div class="container-fluid" style="padding-left:0px">
+<div class="page-header col-md-12" style="background-color:#4D4D4D;border:#4D4D4D;margin-top:0px;margin-bottom:0px;  padding:20px 10px 20px 10px;box-shadow:0px 0px 15px 0px rgba(0, 0, 0, 0.4);margin-right:15px">
 	<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editorModal">Open Editor Options</button>
     <select class="selectpicker editor_language" data-width="auto">
                                 
@@ -61,8 +63,65 @@
     <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#codeModal" style="background-color:#333; border-color:#333">Run Code <span class="glyphicon glyphicon-chevron-right"></span></button>
 
     <span class="user_span pull-right"></span>
+</div>
 
-	<!-- Modal -->
+	<div class="row" style="margin-right:0px">
+		<div class="col-md-6 editor-div" style="padding-top:20px;padding-left:30px">
+<textarea id="editor-area" rows="200" >
+</textarea>
+		</div>
+
+	        <!-- Video area -->
+	    <div class="col-md-3" id="video-container" style="margin-top:20px">
+	        
+	        <video id="their-video" autoplay></video>
+	        
+	        <div class="btn-group">
+	        <a href="#" class="btn btn-info btn-sm" data-toggle="modal" onclick="vidfunctn();" data-target="#videoModal">Large Screen</a>
+	        </div>
+	            <video class="pull-left" id="my-video" muted="true" autoplay>lol</video>
+	    </div>
+       
+
+<div class="col-md-2 col-md-offset-1 user_box" style="background-color:#333;">
+
+</div>
+
+
+	
+</div>
+</div>
+<!--
+	<div class="col-md-3 col-md-offset-9" style="position:fixed; bottom:0; left:0; right:0;z-index: 5;padding-right:3px">
+    
+    <div class="panel panel-primary" style="margin-bottom: 0px">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-comment"></span> Chat
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="collapse" data-target="#chatbody">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </button>
+            </div>
+        </div>
+        <div class="collapse in" id="chatbody">
+            <div class="panel-body" >
+                <ul class="chat">
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send_chat()">
+                                Send</button>
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+    <!-- Modal -->
     <div id="editorModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -97,106 +156,6 @@
             </div>
         </div>
 
-    </div>
-
-<div class="container-fluid">
-
-	<div class="row">
-		<div class="col-md-6 editor-div">
-<textarea id="editor-area" rows="200" >
-</textarea>
-		</div>
-
-	        <!-- Video area -->
-	    <div class="col-md-3" id="video-container">
-	        
-	        <video id="their-video" autoplay></video>
-	        
-	        <div class="btn-group">
-	        <a href="#" class="btn btn-info btn-sm" data-toggle="modal" onclick="vidfunctn();" data-target="#videoModal">Large Screen</a>
-	        </div>
-	            <video class="pull-left" id="my-video" muted="true" autoplay>lol</video>
-	    </div>
-        <!-- TRYING AUTO CALL CONNECT -->
-	    <!-- Steps -->
-	    <!-- <div class="col-md-2">
-	        <!- - Get local audio/video stream - ->
-	        <div id="step1">
-	            <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
-	            <div id="step1-error">
-	                <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
-	                <a href="#" class="btn btn-danger btn-sm" id="step1-retry">Try again</a>
-	            </div>
-	        </div>
-
-	        <!- - Make calls to others - ->
-	        <div id="step2">
-	            <p>Your id: <span id="my-id">...</span></p>
-	            <p>Share this id with others so they can call you.</p>
-	            <h3>Make a call</h3>
-	            <div class="form-group">
-	                <input type="text" placeholder="Call user id..." id="callto-id">
-	                <a href="#" class="btn btn-success btn-sm" id="make-call">Call</a>
-	            </div>
-	        </div>
-
-	        <!- - Call in progress - ->
-	        <div id="step3">
-	            <p>Currently in call with <span id="their-id">...</span></p>
-	            <p><a href="#" class="btn btn-danger btn-sm" id="end-call">End call</a></p>
-	        </div>
-	    </div> -->
-
-	<div id="videoModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-body" style="background-color: #31b0d5;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><strong>InterviewHangouts</strong></h4>
-                </div>
-                <div class="large-video-container">
-                <video class="their-video-large" id="their-video-large" autoplay></video>
-                <div class="small-video-container"><video class=" my-video-large" id="my-video-large" muted="true" autoplay></video></div>
-                </div>
-                </div>
-    	</div>
-	</div>
-	</div>
-</div>
-</div>
-<!--
-	<div class="col-md-3 col-md-offset-9" style="position:fixed; bottom:0; left:0; right:0;z-index: 5;padding-right:3px">
-    
-    <div class="panel panel-primary" style="margin-bottom: 0px">
-        <div class="panel-heading">
-            <span class="glyphicon glyphicon-comment"></span> Chat
-            <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="collapse" data-target="#chatbody">
-                    <span class="glyphicon glyphicon-chevron-down"></span>
-                </button>
-            </div>
-        </div>
-        <div class="collapse in" id="chatbody">
-            <div class="panel-body" >
-                <ul class="chat">
-                </ul>
-            </div>
-            <div class="panel-footer">
-                <div class="input-group">
-                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                        <span class="input-group-btn">
-                            <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send_chat()">
-                                Send</button>
-                        </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-    -->
 
     <!-- Modal -->
     <div id="codeModal" class="modal fade" role="dialog">
@@ -225,6 +184,55 @@
                 </div>
             </div>
         </div>
+
+    <div id="videoModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body" style="background-color: #31b0d5;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><strong>InterviewHangouts</strong></h4>
+                </div>
+                <div class="large-video-container">
+                <video class="their-video-large" id="their-video-large" autoplay></video>
+                <div class="small-video-container"><video class=" my-video-large" id="my-video-large" muted="true" autoplay></video></div>
+                </div>
+                </div>
+        </div>
+    </div>
+    </div>
+
+     <!-- TRYING AUTO CALL CONNECT -->
+        <!-- Steps -->
+        <!-- <div class="col-md-2">
+            <!- - Get local audio/video stream - ->
+            <div id="step1">
+                <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
+                <div id="step1-error">
+                    <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
+                    <a href="#" class="btn btn-danger btn-sm" id="step1-retry">Try again</a>
+                </div>
+            </div>
+
+            <!- - Make calls to others - ->
+            <div id="step2">
+                <p>Your id: <span id="my-id">...</span></p>
+                <p>Share this id with others so they can call you.</p>
+                <h3>Make a call</h3>
+                <div class="form-group">
+                    <input type="text" placeholder="Call user id..." id="callto-id">
+                    <a href="#" class="btn btn-success btn-sm" id="make-call">Call</a>
+                </div>
+            </div>
+
+            <!- - Call in progress - ->
+            <div id="step3">
+                <p>Currently in call with <span id="their-id">...</span></p>
+                <p><a href="#" class="btn btn-danger btn-sm" id="end-call">End call</a></p>
+            </div>
+        </div> -->
 
 
 </body>

@@ -31,7 +31,7 @@
   padding-bottom: 0;
 }
 #video-container {
-  margin-left:3px;
+ /* margin-left:3px;*/ /*causes last col to go down*/
   padding: 10px;
   text-align: center;
   background-color: lightgray ;
@@ -60,8 +60,8 @@ body{
 
 .editor-div{
     overflow: auto;
-    padding: 20px 20px 20px 20px;
-    border-right:solid 3px darkgrey;
+    /*padding: 20px 20px 20px 20px;
+    border-right:solid 3px darkgrey;*/
 }
 .editor_option_row{
     padding-left: 30px;

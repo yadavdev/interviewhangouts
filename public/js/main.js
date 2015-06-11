@@ -1,7 +1,7 @@
 $(function(){ //Initialise codemirror with options
     var editor = CodeMirror.fromTextArea(document.getElementById("editor-area"), {
         lineNumbers: true,
-        theme:"ambiance",
+        //theme:"ambiance",
         styleActiveLine: true,
         matchBrackets: true,
         mode: "text/x-csrc"
@@ -41,7 +41,7 @@ $(function(){ //Initialise codemirror with options
 
         });
     socket.on('usr_connect', function(remote_usr){
-            alert(remote_usr);
+            //alert(remote_usr);
             $(".remote_usr_button").css({visibility:true});
             $(".remote_usr_button").val(user);
 
@@ -150,8 +150,7 @@ $(function(){ //Initialise codemirror with options
                                 //alert("Script loaded and executed.");
                 });
             }
-        
-    }); 
+        }); 
 
      $( ".editor_keymap" ).change(function() {
             if($(".editor_keymap").val() == "sublime"){
@@ -199,6 +198,13 @@ $(function(){ //Initialise codemirror with options
                     }
 
             });
+      var req_height= $(window).height() - $(".page-header").outerHeight(true);
+     // alert(req_height);
+      $(".user_box").css('height',req_height);
+      $(".CodeMirror").css('height',req_height-30);
+      $(".CodeMirror").css('border',"1px solid darkgrey");
+      $(".CodeMirror-gutters").css('height',req_height-30);
+     // $(".container-fluid").css('padding-right',"0px");
 
 }); 
 
