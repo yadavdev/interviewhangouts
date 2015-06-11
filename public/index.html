@@ -93,8 +93,8 @@ int main()
                </div>
             </div>
 
-	        <div class="panel panel-primary" style="margin-bottom: 0px;height:60%">
-        <div class="panel-heading">
+	        <div class="panel panel-primary" style="margin-bottom: 0px;height:60%;">
+        <div class="panel-heading"  style="height:10%">
             <span class="glyphicon glyphicon-comment"></span> Chat
             <div class="btn-group pull-right">
              <!--   <button type="button" class="btn btn-default btn-xs">
@@ -102,18 +102,17 @@ int main()
                 </button> -->
             </div>
         </div>
-            <div class="panel-body" >
+            <div class="panel-body" style="height:75%">
                 <ul class="chat">
                 </ul>
             </div>
-            <div class="panel-footer" style="padding:0px 0px 0px 0px; bottom:0;">
-                <div class="input-group">
-                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+            <div class="panel-footer" style="padding:0px 0px 0px 0px; bottom:0;right:0;height:15%;">
+                <textarea id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here... Press ENTER to send and SHIFT+ENTER to newline." id="#chatarea" rows="2" style="resize:none;"></textarea>
+                   <!-- <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                         <span class="input-group-btn">
                             <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send_chat()">
                                 Send</button>
-                        </span>
-                </div>
+                        </span> -->
             </div>
     </div>
 
