@@ -14,7 +14,7 @@ app.get('/:roomName', function(req, res){
 
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    //console.log('a user connected');
      
     socket.on('disconnect', function(){
       socket.leave(socket.room);
@@ -26,7 +26,7 @@ io.on('connection', function(socket){
         delete rooms[socket.room];
       }
       io.sockets.in(socket.room).emit('usr_disconnect', socket.user);
-
+      console.log(socket.user+" Disconnected.");
 
     });
 
@@ -59,7 +59,7 @@ io.on('connection', function(socket){
         socket.join(socket.room);
         io.sockets.in(socket.room).emit('usr_connect', rooms[socket.room].user_array);
         //console.log(socket.room +": "+rooms[socket.room].num_users +": " + rooms[socket.room].user_array);
-      
+      console.log(socket.user+" connected.");
       });
 
     socket.on('chatmsg', function(msg){

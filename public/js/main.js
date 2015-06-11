@@ -1,4 +1,5 @@
 $(function(){ //Initialise codemirror with options
+    var people_online =0;
     var editor = CodeMirror.fromTextArea(document.getElementById("editor-area"), {
         lineNumbers: true,
         //theme:"ambiance",
@@ -11,10 +12,14 @@ $(function(){ //Initialise codemirror with options
     socket = io();
     var myroom = window.location.pathname;
    // $(".remote_usr_button").css({visibility:none});
-    user = "Devashish Yadav";//prompt("Please Enter Your Name","");
-    //while (user == ""){
-    //    user = prompt("Please Enter Your Name","");
-    //}
+    user = "lol";//prompt("Please Enter Your Name","");
+    // First you forcibly request the scroll bars to hidden regardless if they will be needed or not.
+    
+    while (user == ""){
+        user = prompt("Please Enter Your Name","");
+    }
+
+     $(".user_list").html("<div style='color:white'>0 person online in this room</div>");
     $(".user_span").html("<h4 class='h4' style='color:white'>Hello <b><u>" + user + "</u> .</b></h4>" );
     myroom = myroom.slice(1);
       
@@ -40,16 +45,22 @@ $(function(){ //Initialise codemirror with options
             
 
         });
-    socket.on('usr_connect', function(remote_usr){
-            //alert(remote_usr);
-            $(".remote_usr_button").css({visibility:true});
-            $(".remote_usr_button").val(user);
 
+    socket.on('usr_connect', function(remote_usr){
+            $(".user_list").empty();
+            people_online++;
+            for(var i=0; i<remote_usr.length;i++){
+                    if(remote_usr[i] !== user){
+                    $(".user_list").append('<div class="btn-group pull-right rm_'+remote_usr[i]+'_div" style="padding: 5px 5px 5px 5px;width:100%"><button type="button" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i> '+remote_usr[i]+' <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a href="#">Video Chat</a></li></ul></div>');
+                    }
+            }
         });
-    socket.on('usr_disconnect', function(remote_usr){
-            alert(remote_usr + " disconnected.");
-            $(".remote_usr_button").css({visibility:false});
-            $(".remote_usr_button").text(user+" disconnected");
+    socket.on('usr_disconnect', function(disconnected_user){
+             $('rm_'+disconnected_user+'_div').remove();
+             if(people_online === 0){
+                $(".user_list").empty();
+                $(".user_list").html("0 person online in this room");
+            }
 
         });
     
@@ -205,7 +216,6 @@ $(function(){ //Initialise codemirror with options
       $(".CodeMirror").css('border',"1px solid darkgrey");
       $(".CodeMirror-gutters").css('height',req_height-30);
       $("#video-container").css('height',req_height-20);
-     // $(".container-fluid").css('padding-right',"0px");
 
      $('#chatarea').keypress(function(e) {
         if (e.keyCode == 13 && !e.shiftKey && document.getElementById('chatarea').value !=="") {
