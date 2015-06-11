@@ -207,6 +207,21 @@ $(function(){ //Initialise codemirror with options
       $("#video-container").css('height',req_height-20);
      // $(".container-fluid").css('padding-right',"0px");
 
+     $('#chatarea').keypress(function(e) {
+        if (e.keyCode == 13 && !e.shiftKey && document.getElementById('chatarea').value !=="") {
+        e.preventDefault();
+        socket.emit('chatmsg', document.getElementById('chatarea').value); 
+        var d = new Date;
+        var chatmsg ='<li class="clearfix"><div class="chat-body clearfix" style="font-size:10px"><div class="header clearfix"><strong class="pull-right primary-font">'+user+'</strong></div><p class="text-left">'+document.getElementById('chatarea').value+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
+        $(".chat").append(chatmsg);
+        document.getElementById('chatarea').value='';
+        var scrolltoh = $('.panel-body')[0].scrollHeight;
+                    $('.panel-body').scrollTop(scrolltoh);
+
+        }
+    });
+
+
 }); 
 
 /*// Compatibility shim
@@ -302,14 +317,4 @@ function step3 (call) {
         theirvideolarge.src = theirvideosmall.src;
         theirvideolarge.autoplay = true;
     }
-function send_chat(){
-        socket.emit('chatmsg', document.getElementById('btn-input').value); 
-        var d = new Date;
-        var chatmsg ='<li class="clearfix"><div class="chat-body clearfix"><div class="header clearfix"><strong class="pull-right primary-font">'+user+'</strong></div><p class="text-left">'+document.getElementById('btn-input').value+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
-        $(".chat").append(chatmsg);
-        document.getElementById('btn-input').value='';
-        var scrolltoh = $('.panel-body')[0].scrollHeight;
-                    $('.panel-body').scrollTop(scrolltoh);
-
-}
 */
