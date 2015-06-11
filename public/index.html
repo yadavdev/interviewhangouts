@@ -93,10 +93,6 @@ int main()
                </div>
             </div>
 
-	     <!--   <div class="btn-group">
-	        <a href="#" class="btn btn-info btn-sm" data-toggle="modal" onclick="vidfunctn();" data-target="#videoModal">Large Screen</a>
-	        </div> -->
-	            
 	        <div class="panel panel-primary" style="margin-bottom: 0px;height:60%">
         <div class="panel-heading">
             <span class="glyphicon glyphicon-comment"></span> Chat
@@ -126,44 +122,38 @@ int main()
         </div>
        
 
-<div class="col-md-2 user_box" style="background-color:#333;">
-
+<div class="col-md-2 user_box" style="background-color:#333;color:white;overflow:auto">
+         <div class="btn-group pull-right" style="padding: 5px 5px 5px 5px;width:100%">
+        <h4 class="h4"><button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-chevron-down"></span></button> You are Online <i class="fa fa-circle" style="color:green"></i>
+           <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Go Online <i class="fa fa-circle" style="color:green"></i></a></li>
+              <li class="divider"></li>
+              <li><a href="#">Go Offline <i class="fa fa-circle" style="color:red"></i></a></li>
+           </ul>
+        </h4></div>
+        <div class="btn-group pull-right" style="padding: 5px 5px 5px 5px;width:100%">
+           <button type="button" class="btn btn-default dropdown-toggle btn-block" 
+              data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i>
+              John Adams <span class="caret"></span>
+           </button>
+           <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Video Chat</a></li>
+           </ul>
+        </div>
+        <div class="btn-group pull-right" style="padding: 5px 5px 5px 5px;width:100%">
+           <button type="button" class="btn btn-default dropdown-toggle btn-block" 
+              data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i>
+              Cristy Sanders <span class="caret"></span>
+           </button>
+           <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Video Chat</a></li>
+        </div>
 </div>
 
 
 	
 </div>
 </div>
-<!--
-	<div class="col-md-3 col-md-offset-9" style="position:fixed; bottom:0; left:0; right:0;z-index: 5;padding-right:3px">
-    
-    <div class="panel panel-primary" style="margin-bottom: 0px">
-        <div class="panel-heading">
-            <span class="glyphicon glyphicon-comment"></span> Chat
-            <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="collapse" data-target="#chatbody">
-                    <span class="glyphicon glyphicon-chevron-down"></span>
-                </button>
-            </div>
-        </div>
-        <div class="collapse in" id="chatbody">
-            <div class="panel-body" >
-                <ul class="chat">
-                </ul>
-            </div>
-            <div class="panel-footer">
-                <div class="input-group">
-                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                        <span class="input-group-btn">
-                            <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send_chat()">
-                                Send</button>
-                        </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
     <!-- Modal -->
     <div id="editorModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
