@@ -7,6 +7,8 @@ $(function(){ //Initialise codemirror with options
         matchBrackets: true,
         mode: "text/x-c++src"
     });
+     $("#calling-peer").hide();
+      $("#end-call").hide();
      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
       step1();
     editor.on("keyup", function(){
@@ -191,6 +193,11 @@ $(function(){ //Initialise codemirror with options
         }
     });
 
+    $('#end-call').click(function(){
+        window.existingCall.close();
+        $("#end-call").hide();
+      });
+
    
 
 });
@@ -226,9 +233,11 @@ $(function(){ //Initialise codemirror with options
                 step3(call);
             });
             peer.on('error', function(err){
-                alert("error peerjs: "+err.message);
-                // Return to step 2 if error occurs
-                step2();
+                $("#freeow").freeow("PeerJs Error Occured:",err.msg + "Please Reload the page." , {
+                    classes: ["smokey", "pushpin"],
+                    autoHide: true,
+                    autoHideDelay:8000
+                    });
             });
 
         });
@@ -297,42 +306,27 @@ $(function(){ //Initialise codemirror with options
 // PeerJS object
 
 // Click handlers setup
-$(function(){
-
-    $('#make-call').click(function(){
-        // Initiate a call!
-       
-    });
-
-    $('#end-call').click(function(){
-        window.existingCall.close();
-        step2();
-    });
-
-    // Retry if getUserMedia fails
-    $('#step1-retry').click(function(){
-        $('#step1-error').hide();
-        step1();
-    });
-
-    // Get things started
-    //step1();
-});
-
 function step1 () {
     // Get audio/video stream
     navigator.getUserMedia({audio: true, video: true}, function(stream){
         // Set your video displays
         $('#my-video').prop('src', URL.createObjectURL(stream));
-
+        step2();
         window.localStream = stream;
-        //step2();
-    }, function(){ /*$('#step1-error').show();*/ alert("error in step1."); });
+    }, function(){ $("#freeow").freeow("WebCam Error.", "Failed to access the webcam and microphone. Please reload the page and click allow when asked for permission by the browser.", {
+                    classes: ["smokey", "warning"],
+                    autoHide: false
+                    });
+ });
 }
 
 function step2 () {
-   // $('#step1, #step3').hide();
-    //$('#step2').show();
+    $("#freeow").freeow("Video Chat", "The text Chat is already active. To start a video chat click on person's name and select video chat.", {
+                    classes: ["smokey", "pushpin"],
+                    autoHide: true,
+                    autoHideDelay:8000
+                    });
+
 }
 
 function step3 (call) {
@@ -345,14 +339,17 @@ function step3 (call) {
     call.on('stream', function(stream){
         $('#their-video').prop('src', URL.createObjectURL(stream));
     });
-
+     $("#calling-peer").hide();
     // UI stuff
     window.existingCall = call;
-    //$('#their-id').text(call.peer);
-
-    call.on('close', step2);
-   // $('#step1, #step2').hide();
-   // $('#step3').show();
+     $("#end-call").show();
+    call.on('close', function(){
+        $("#freeow").freeow("Video Chat", "Call Disconnected. Text Chat is always active", {
+                    classes: ["smokey", "pushpin"],
+                    autoHide: true,
+                    autoHideDelay:5000
+                    });
+    });
 }
 
     function vidfunctn() {
@@ -377,8 +374,10 @@ function get_Peer_Id(peer_name){
                             break;                 
                     }
             }
+     $("#calling-peer").show();
      var call = peer.call(user_online_array[id_found][1], window.localStream);
 
     step3(call);
+   
 
 }
