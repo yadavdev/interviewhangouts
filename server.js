@@ -53,7 +53,7 @@ io.on('connection', function(socket){
       socket.user = roomName.user;
       if(socket.room == ""){
         socket.room = "defaultroom";
-        console.log("added to dafultroom");
+        //console.log("added to dafultroom");
       }
       var flag=0; //NOTE: No raising race condition now
       for( var key in rooms ) {

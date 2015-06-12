@@ -24,7 +24,7 @@ $(function(){ //Initialise codemirror with options
       $(".CodeMirror-gutters").css('height',req_height-30);
       $("#video-container").css('height',req_height-20);
       $(".user_list").html("<div style='color:white'>0 person online in this room</div>");
-      $(".user_span").html("<h4 class='h4' style='color:white'>Hello <b><u>" + user + "</u> .</b></h4>" );
+      $(".user_span").html("<h5 class='h5' style='color:white'>Hello <b><u>" + user + "</u></b></h4>" );
 
           var myroom = window.location.pathname;
               myroom = myroom.slice(1);
