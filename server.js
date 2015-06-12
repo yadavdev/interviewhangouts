@@ -3,6 +3,13 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var unirest = require('unirest');
+var ExpressPeerServer = require('peer').ExpressPeerServer;
+var options = {
+    debug: true
+}
+
+app.use('/api', ExpressPeerServer(http, options));
+
 var rooms=[];
 
 app.use(express.static(__dirname + '/public/'));
@@ -15,7 +22,6 @@ app.get('/:roomName', function(req, res){
 
 io.on('connection', function(socket){
     //console.log('a user connected');
-     
     socket.on('disconnect', function(){
       socket.leave(socket.room);
        var user_idx = -1;
@@ -64,6 +70,7 @@ io.on('connection', function(socket){
       }
         socket.join(socket.room);
         io.sockets.in(socket.room).emit('usr_connect', rooms[socket.room].user_array);
+        io.to(socket.id).emit('socket_id',socket.id);
         console.log(socket.user+" connected.");
       });
 

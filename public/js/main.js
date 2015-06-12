@@ -1,88 +1,36 @@
 $(function(){ //Initialise codemirror with options
-    var people_online =0;
-    var editor = CodeMirror.fromTextArea(document.getElementById("editor-area"), {
+     people_online =0;
+     editor = CodeMirror.fromTextArea(document.getElementById("editor-area"), {
         lineNumbers: true,
         //theme:"ambiance",
         styleActiveLine: true,
         matchBrackets: true,
         mode: "text/x-c++src"
     });
-    $(".code_output").val("#Output will be displayed here.#");
-    $(".code_output").prop('disabled', true);
-    socket = io();
-    user_online_array = "";
-    var myroom = window.location.pathname;
-   // $(".remote_usr_button").css({visibility:none});
-    user = prompt("Please Enter Your Name","");
-    my_socket_id ="";
-    // First you forcibly request the scroll bars to hidden regardless if they will be needed or not.
-
-    while (user == ""){
-        user = prompt("Please Enter Your Name","");
-    }
-    var num_users =0;
-     $(".user_list").html("<div style='color:white'>0 person online in this room</div>");
-    $(".user_span").html("<h4 class='h4' style='color:white'>Hello <b><u>" + user + "</u> .</b></h4>" );
-    myroom = myroom.slice(1);
-      
-    socket.emit('addToRoom',{'room':myroom, 'user':user});
-      
-      editor.on("keyup", function(){
+     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+      step1();
+    editor.on("keyup", function(){
             socket.emit('Edit_Request',editor.getValue());
       });  
-    
-      socket.on("Edit_Response", function(msg){
+    $(".code_output").val("#Output will be displayed here.#");
+    $(".code_output").prop('disabled', true);
+    req_height= $(window).height() - $(".page-header").outerHeight(true);
+     // alert(req_height);
+      $(".user_box").css('height',req_height);
+      $(".CodeMirror").css('height',req_height-30);
+      $(".CodeMirror").css('border',"1px solid darkgrey");
+      $(".CodeMirror-gutters").css('height',req_height-30);
+      $("#video-container").css('height',req_height-20);
+      $(".user_list").html("<div style='color:white'>0 person online in this room</div>");
+      $(".user_span").html("<h4 class='h4' style='color:white'>Hello <b><u>" + user + "</u> .</b></h4>" );
 
-                  editor.setValue(msg);
-      });
-    socket.on('chatmsg', function(msg){
-        var d = new Date;
-        var chatmsg ='<li class="clearfix"><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+msg.user+'</strong></div><p class="text-left">'+msg.msg+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
-        $(".chat").append(chatmsg);
+          var myroom = window.location.pathname;
+              myroom = myroom.slice(1);
 
-          var scrolltoh = $('.panel-body')[0].scrollHeight;
-                    $('.panel-body').scrollTop(scrolltoh);
-          var audio = document.getElementById('sound_chat');
-              audio.play();   
-            
+         socket.emit('addToRoom',{'room':myroom, 'user':user});
+         $("#roompath").val(window.location);
 
-        });
 
-    socket.on('usr_connect', function(users_array){
-            $(".user_list").empty();
-            user_online_array = users_array;
-            num_users=user_online_array.length -1;
-            if(num_users ===0)
-                $(".user_list").html("0 person online in this room");
-            for(var i=0; i<users_array.length;i++){
-                    if(users_array[i][0] !== user){
-                    //remote_peer_id = remote_usr.peer_id;
-                    $(".user_list").append('<div class="btn-group pull-right rm_'+users_array[i][0]+'_div " style="padding: 5px 5px 5px 5px;width:100%"><button type="button" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i> '+users_array[i][0]+' <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a class="btn btn-success btn-link " onclick="get_Peer_Id(this);" id="'+users_array[i][0]+'">Start Video-Call </a></li></ul></div>');
-                    }
-            }
-        });
-    socket.on('usr_disconnect', function(disconnected_user){
-             $('.rm_'+disconnected_user+'_div').remove();
-             num_users--;
-             if(num_users === 0){
-                $(".user_list").empty();
-                $(".user_list").html("0 person online in this room");
-            }
-
-        });
-    
-    socket.on("result", function(msg){
-                         $('.code_submit').buttonLoader('stop');
-                         $(".code_output").prop('disabled', false);
-                         $(".code_input").prop('disabled', false);
-                        try{
-                         var out= "Compilation Msg#:\n" +msg.result.compilemessage + "\nTime#:\n" + msg.result.time+"\n#Output#:\n" + msg.result.stdout;
-                         $(".code_output").val(out);
-                         }
-                         catch(err){
-                            alert("Server side error.\nPlease retry or reload the page.\n Error:\n"+ err.message +"\nNote: There is a problem with 'scanf' function in c/c++.\n If you are using it please use cin instead for now." );
-                         }
-                    }); 
 
     $( ".editor_language" ).change(function() {
             if($(".editor_language").val() == "cpp"){
@@ -216,13 +164,7 @@ $(function(){ //Initialise codemirror with options
                     }
 
             });
-      var req_height= $(window).height() - $(".page-header").outerHeight(true);
-     // alert(req_height);
-      $(".user_box").css('height',req_height);
-      $(".CodeMirror").css('height',req_height-30);
-      $(".CodeMirror").css('border',"1px solid darkgrey");
-      $(".CodeMirror-gutters").css('height',req_height-30);
-      $("#video-container").css('height',req_height-20);
+     
       $( window ).resize(function() {
               var req_height= $(window).height() - $(".page-header").outerHeight(true);
               $(".user_box").css('height',req_height);
@@ -249,48 +191,109 @@ $(function(){ //Initialise codemirror with options
         }
     });
 
-    $("#roompath").val(window.location);
-
-
-
-/*    socket.on('your_socket_id', function(id){
-        my_socket_id= id;
-
-        });
-    socket.on('peer_id_requested', function(requested_user){
-        if(requested_user.user === user){
-            socket.emit("TakePeerId",{"id":my_socket_id, "to":requested_user.from});
-        }
-
-        });
-    socket.on('id_received', function(id){
-       alert("id is :"+id);
-        });*/
-        
+   
 
 });
+    //peer = "";
+    
+    socket = io();
+    
+    user_online_array = "";
 
-/*// Compatibility shim
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    user = prompt("Please Enter Your Name","");
+
+    my_socket_id ="";
+
+    while (user == ""){
+        user = prompt("Please Enter Your Name","");
+    }
+    var num_users =0;
+
+    socket.on('socket_id', function(id){
+            my_socket_id=id;
+          //  alert(my_socket_id);
+                  peer = new Peer(my_socket_id, {host: 'localhost', port: 5000, path: '/api'});//new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
+
+            peer.on('open', function(){
+                alert("peer object created: "+peer.id+"\n socket.id:"+my_socket_id);
+            });
+
+            // Receiving a call
+            peer.on('call', function(call){
+                // Answer the call automatically (instead of prompting user) for demo purposes
+                call.answer(window.localStream);
+                step3(call);
+            });
+            peer.on('error', function(err){
+                alert("error peerjs: "+err.message);
+                // Return to step 2 if error occurs
+                step2();
+            });
+
+        });
+
+  
+      
+     
+    socket.on("Edit_Response", function(msg){
+
+                  editor.setValue(msg);
+      });
+
+    socket.on('chatmsg', function(msg){
+        var d = new Date;
+        var chatmsg ='<li class="clearfix"><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+msg.user+'</strong></div><p class="text-left">'+msg.msg+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
+        $(".chat").append(chatmsg);
+
+          var scrolltoh = $('.panel-body')[0].scrollHeight;
+                    $('.panel-body').scrollTop(scrolltoh);
+          var audio = document.getElementById('sound_chat');
+              audio.play();   
+            
+
+        });
+
+    socket.on('usr_connect', function(users_array){
+            $(".user_list").empty();
+            user_online_array = users_array;
+            num_users=user_online_array.length -1;
+            if(num_users ===0)
+                $(".user_list").html("0 person online in this room");
+            for(var i=0; i<users_array.length;i++){
+                    if(users_array[i][0] !== user){
+                    //remote_peer_id = remote_usr.peer_id;
+                    $(".user_list").append('<div class="btn-group pull-right rm_'+users_array[i][0]+'_div " style="padding: 5px 5px 5px 5px;width:100%"><button type="button" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i> '+users_array[i][0]+' <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a class="btn btn-success btn-link " onclick="get_Peer_Id(this);" id="'+users_array[i][0]+'">Start Video-Call </a></li></ul></div>');
+                    }
+            }
+        });
+    socket.on('usr_disconnect', function(disconnected_user){
+             $('.rm_'+disconnected_user+'_div').remove();
+             num_users--;
+             if(num_users === 0){
+                $(".user_list").empty();
+                $(".user_list").html("0 person online in this room");
+            }
+
+        });
+    
+    socket.on("result", function(msg){
+                         $('.code_submit').buttonLoader('stop');
+                         $(".code_output").prop('disabled', false);
+                         $(".code_input").prop('disabled', false);
+                        try{
+                         var out= "Compilation Msg#:\n" +msg.result.compilemessage + "\nTime#:\n" + msg.result.time+"\n#Output#:\n" + msg.result.stdout;
+                         $(".code_output").val(out);
+                         }
+                         catch(err){
+                            alert("Server side error.\nPlease retry or reload the page.\n Error:\n"+ err.message +"\nNote: There is a problem with 'scanf' function in c/c++.\n If you are using it please use cin instead for now." );
+                         }
+                    }); 
+
+
+// Compatibility shim
+
 
 // PeerJS object
-var peer = new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
-
-peer.on('open', function(){
-    $('#my-id').text(peer.id);
-});
-
-// Receiving a call
-peer.on('call', function(call){
-    // Answer the call automatically (instead of prompting user) for demo purposes
-    call.answer(window.localStream);
-    step3(call);
-});
-peer.on('error', function(err){
-    //alert(err.message);
-    // Return to step 2 if error occurs
-    step2();
-});
 
 // Click handlers setup
 $(function(){
@@ -314,7 +317,7 @@ $(function(){
     });
 
     // Get things started
-    step1();
+    //step1();
 });
 
 function step1 () {
@@ -363,7 +366,8 @@ function step3 (call) {
         theirvideolarge.src = theirvideosmall.src;
         theirvideolarge.autoplay = true;
     }
-*/
+
+
 function get_Peer_Id(peer_name){
     alert(peer_name.id);
     var id_found=-1;
