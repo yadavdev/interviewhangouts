@@ -25,6 +25,8 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
       socket.leave(socket.room);
        var user_idx = -1;
+      if(rooms[socket.room] != undefined){
+          console.log("undefined");
       for(var i=0;i<rooms[socket.room].user_array.length;i++){
 
         if(rooms[socket.room].user_array[i][0] === socket.user){
@@ -41,13 +43,18 @@ io.on('connection', function(socket){
       }
       io.sockets.in(socket.room).emit('usr_disconnect', socket.user);
       console.log(socket.user+" Disconnected.");
+    }
+    else console.log("undefined");
 
     });
 
     socket.on('addToRoom', function (roomName){
       socket.room = roomName.room;
       socket.user = roomName.user;
-      
+      if(socket.room == ""){
+        socket.room = "defaultroom";
+        console.log("added to dafultroom");
+      }
       var flag=0; //NOTE: No raising race condition now
       for( var key in rooms ) {
         if( key === socket.room ){
