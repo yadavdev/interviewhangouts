@@ -215,7 +215,7 @@ $(function(){ //Initialise codemirror with options
     var num_users =0;
 
     socket.on('socket_id', function(id){
-            my_socket_id=id;
+            my_socket_id=id.replace(/[^a-z0-9]/gi,'');
           //  alert(my_socket_id);
                   peer = new Peer(my_socket_id, {host: 'localhost', port: 5000, path: '/api'});//new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
 
@@ -373,7 +373,7 @@ function get_Peer_Id(peer_name){
                     }
             }
      $("#calling-peer").show();
-     var call = peer.call(user_online_array[id_found][1], window.localStream);
+     var call = peer.call(user_online_array[id_found][1].replace(/[^a-z0-9]/gi,''), window.localStream);
 
     step3(call);
    
