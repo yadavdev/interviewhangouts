@@ -71,7 +71,7 @@ io.on('connection', function(socket){
       socket.broadcast.to(socket.room).emit('chatmsg',{"user":socket.user,"msg":msg});
       //console.log('%s: user %s says, %s', socket.room,socket.user, msg);
    });
-
+/*
     socket.on('getPeerId', function(parameter){
 
       socket.broadcast.to(socket.room).emit('peer_id_requested',{"user":parameter.user,"from":socket.id});
@@ -82,7 +82,7 @@ io.on('connection', function(socket){
 
       io.to(parameter.to).emit('id_received',parameter.id);
       console.log('id received emmited');
-   });
+   });*/
  
      socket.on('Edit_Request', function(msg){
       ////console.log('Editor request recieved');

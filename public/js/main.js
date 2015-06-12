@@ -10,6 +10,7 @@ $(function(){ //Initialise codemirror with options
     $(".code_output").val("#Output will be displayed here.#");
     $(".code_output").prop('disabled', true);
     socket = io();
+    user_online_array = "";
     var myroom = window.location.pathname;
    // $(".remote_usr_button").css({visibility:none});
     user = prompt("Please Enter Your Name","");
@@ -19,7 +20,7 @@ $(function(){ //Initialise codemirror with options
     while (user == ""){
         user = prompt("Please Enter Your Name","");
     }
-
+    var num_users =0;
      $(".user_list").html("<div style='color:white'>0 person online in this room</div>");
     $(".user_span").html("<h4 class='h4' style='color:white'>Hello <b><u>" + user + "</u> .</b></h4>" );
     myroom = myroom.slice(1);
@@ -47,19 +48,23 @@ $(function(){ //Initialise codemirror with options
 
         });
 
-    socket.on('usr_connect', function(remote_usr){
+    socket.on('usr_connect', function(users_array){
             $(".user_list").empty();
-            people_online++;
-            for(var i=0; i<remote_usr.length;i++){
-                    if(remote_usr[i] !== user){
+            user_online_array = users_array;
+            num_users=user_online_array.length -1;
+            if(num_users ===0)
+                $(".user_list").html("0 person online in this room");
+            for(var i=0; i<users_array.length;i++){
+                    if(users_array[i][0] !== user){
                     //remote_peer_id = remote_usr.peer_id;
-                    $(".user_list").append('<div class="btn-group pull-right " style="padding: 5px 5px 5px 5px;width:100%"><button type="button" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i> '+remote_usr[i]+' <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a class="btn btn-success btn-link" onclick="get_Peer_Id(this);" id="make-call">Start Video-Call</a></li></ul></div>');
+                    $(".user_list").append('<div class="btn-group pull-right rm_'+users_array[i][0]+'_div " style="padding: 5px 5px 5px 5px;width:100%"><button type="button" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i> '+users_array[i][0]+' <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a class="btn btn-success btn-link " onclick="get_Peer_Id(this);" id="'+users_array[i][0]+'">Start Video-Call </a></li></ul></div>');
                     }
             }
         });
     socket.on('usr_disconnect', function(disconnected_user){
-             $('rm_'+disconnected_user+'_div').remove();
-             if(people_online === 0){
+             $('.rm_'+disconnected_user+'_div').remove();
+             num_users--;
+             if(num_users === 0){
                 $(".user_list").empty();
                 $(".user_list").html("0 person online in this room");
             }
@@ -248,7 +253,7 @@ $(function(){ //Initialise codemirror with options
 
 
 
-    socket.on('your_socket_id', function(id){
+/*    socket.on('your_socket_id', function(id){
         my_socket_id= id;
 
         });
@@ -260,7 +265,7 @@ $(function(){ //Initialise codemirror with options
         });
     socket.on('id_received', function(id){
        alert("id is :"+id);
-        });
+        });*/
         
 
 });
@@ -360,6 +365,13 @@ function step3 (call) {
     }
 */
 function get_Peer_Id(peer_name){
-    alert(peer_name.innerHTML);
-    socket.emit("getPeerId",peer_name);
+    alert(peer_name.id);
+    var id_found=-1;
+    for(var i=0; i<user_online_array.length;i++){
+                    if(user_online_array[i][0] === peer_name.id){
+                            id_found=i;
+                            break;                 
+                    }
+            }
+    //socket.emit("getPeerId",peer_name);
     }
