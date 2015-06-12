@@ -231,7 +231,7 @@ $(function(){ //Initialise codemirror with options
                 step3(call);
             });
             peer.on('error', function(err){
-                $("#freeow").freeow("PeerJs Error Occured:",err.msg + "\nPlease Reload the page." , {
+                $("#freeow").freeow("PeerJs Error Occured:",err.message + "\nPlease Reload the page." , {
                     classes: ["smokey", "pushpin"],
                     autoHide: true,
                     autoHideDelay:8000
