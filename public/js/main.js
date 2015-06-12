@@ -12,7 +12,8 @@ $(function(){ //Initialise codemirror with options
     socket = io();
     var myroom = window.location.pathname;
    // $(".remote_usr_button").css({visibility:none});
-    user = "lol";//prompt("Please Enter Your Name","");
+    user = prompt("Please Enter Your Name","");
+    my_socket_id ="";
     // First you forcibly request the scroll bars to hidden regardless if they will be needed or not.
 
     while (user == ""){
@@ -51,7 +52,8 @@ $(function(){ //Initialise codemirror with options
             people_online++;
             for(var i=0; i<remote_usr.length;i++){
                     if(remote_usr[i] !== user){
-                    $(".user_list").append('<div class="btn-group pull-right rm_'+remote_usr[i]+'_div" style="padding: 5px 5px 5px 5px;width:100%"><button type="button" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i> '+remote_usr[i]+' <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a href="#">Video Chat</a></li></ul></div>');
+                    //remote_peer_id = remote_usr.peer_id;
+                    $(".user_list").append('<div class="btn-group pull-right " style="padding: 5px 5px 5px 5px;width:100%"><button type="button" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i> '+remote_usr[i]+' <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a class="btn btn-success btn-link" onclick="get_Peer_Id(this);" id="make-call">Start Video-Call</a></li></ul></div>');
                     }
             }
         });
@@ -244,7 +246,24 @@ $(function(){ //Initialise codemirror with options
 
     $("#roompath").val(window.location);
 
-}); 
+
+
+    socket.on('your_socket_id', function(id){
+        my_socket_id= id;
+
+        });
+    socket.on('peer_id_requested', function(requested_user){
+        if(requested_user.user === user){
+            socket.emit("TakePeerId",{"id":my_socket_id, "to":requested_user.from});
+        }
+
+        });
+    socket.on('id_received', function(id){
+       alert("id is :"+id);
+        });
+        
+
+});
 
 /*// Compatibility shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -340,3 +359,7 @@ function step3 (call) {
         theirvideolarge.autoplay = true;
     }
 */
+function get_Peer_Id(peer_name){
+    alert(peer_name.innerHTML);
+    socket.emit("getPeerId",peer_name);
+    }

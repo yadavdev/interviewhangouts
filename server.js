@@ -18,11 +18,19 @@ io.on('connection', function(socket){
      
     socket.on('disconnect', function(){
       socket.leave(socket.room);
-      var user_idx = rooms[socket.room].user_array.indexOf(socket.user);
-      rooms[socket.room].user_array.splice(user_idx,1);
-      rooms[socket.room].num_users --;
+       var user_idx = -1;
+      for(var i=0;i<rooms[socket.room].user_array.length;i++){
 
-      if(rooms[socket.room].num_users === 0){
+        if(rooms[socket.room].user_array[i][0] === socket.user){
+            user_idx = i;
+            break;
+          }
+      }
+
+      rooms[socket.room].user_array.splice(user_idx,1);
+      console.log(rooms[socket.room].user_array);
+
+      if(rooms[socket.room].user_array.length === 0){
         delete rooms[socket.room];
       }
       io.sockets.in(socket.room).emit('usr_disconnect', socket.user);
@@ -43,23 +51,20 @@ io.on('connection', function(socket){
             break;
         }
       }
-
+      
       if(flag === 0){
         rooms[socket.room] = {
               name:socket.room,
-              num_users: 1,
               user_array:[]
         }
-      rooms[socket.room].user_array.push(socket.user);
+        rooms[socket.room].user_array.push([socket.user,socket.id]);
       }
       else{
-        rooms[socket.room].num_users ++;
-        rooms[socket.room].user_array.push(socket.user);
+        rooms[socket.room].user_array.push([socket.user,socket.id]);
       }
         socket.join(socket.room);
         io.sockets.in(socket.room).emit('usr_connect', rooms[socket.room].user_array);
-        //console.log(socket.room +": "+rooms[socket.room].num_users +": " + rooms[socket.room].user_array);
-      console.log(socket.user+" connected.");
+        console.log(socket.user+" connected.");
       });
 
     socket.on('chatmsg', function(msg){
@@ -67,7 +72,19 @@ io.on('connection', function(socket){
       //console.log('%s: user %s says, %s', socket.room,socket.user, msg);
    });
 
-    socket.on('Edit_Request', function(msg){
+    socket.on('getPeerId', function(parameter){
+
+      socket.broadcast.to(socket.room).emit('peer_id_requested',{"user":parameter.user,"from":socket.id});
+      //console.log('%s: user %s says, %s', socket.room,socket.user, msg);
+   });
+
+  socket.on('TakePeerId', function(parameter){
+
+      io.to(parameter.to).emit('id_received',parameter.id);
+      console.log('id received emmited');
+   });
+ 
+     socket.on('Edit_Request', function(msg){
       ////console.log('Editor request recieved');
       socket.broadcast.to(socket.room).emit('Edit_Response', msg);
      // //console.log('Response Sent');
