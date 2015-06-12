@@ -17,7 +17,7 @@ $(function(){ //Initialise codemirror with options
     $(".code_output").val("#Output will be displayed here.#");
     $(".code_output").prop('disabled', true);
     req_height= $(window).height() - $(".page-header").outerHeight(true);
-     // alert(req_height);
+     // //alert(req_height);
       $(".user_box").css('height',req_height);
       $(".CodeMirror").css('height',req_height-30);
       $(".CodeMirror").css('border',"1px solid darkgrey");
@@ -200,9 +200,7 @@ $(function(){ //Initialise codemirror with options
 
    
 
-});
-    //peer = "";
-    
+});    
     socket = io();
     
     user_online_array = "";
@@ -222,13 +220,13 @@ $(function(){ //Initialise codemirror with options
                   peer = new Peer(my_socket_id, {host: 'localhost', port: 5000, path: '/api'});//new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
 
             peer.on('open', function(){
-                alert("peer object created: "+peer.id+"\n socket.id:"+my_socket_id);
+                //alert("peer object created: "+peer.id+"\n socket.id:"+my_socket_id);
             });
 
             // Receiving a call
             peer.on('call', function(call){
                 // Answer the call automatically (instead of prompting user) for demo purposes
-                alert("call recieving");
+                //alert("call recieving");
                 call.answer(window.localStream);
                 step3(call);
             });
@@ -295,7 +293,7 @@ $(function(){ //Initialise codemirror with options
                          $(".code_output").val(out);
                          }
                          catch(err){
-                            alert("Server side error.\nPlease retry or reload the page.\n Error:\n"+ err.message +"\nNote: There is a problem with 'scanf' function in c/c++.\n If you are using it please use cin instead for now." );
+                            //alert("Server side error.\nPlease retry or reload the page.\n Error:\n"+ err.message +"\nNote: There is a problem with 'scanf' function in c/c++.\n If you are using it please use cin instead for now." );
                          }
                     }); 
 
@@ -366,7 +364,7 @@ function step3 (call) {
 
 
 function get_Peer_Id(peer_name){
-    alert(peer_name.id);
+    //alert(peer_name.id);
     var id_found=-1;
     for(var i=0; i<user_online_array.length;i++){
                     if(user_online_array[i][0] === peer_name.id){
