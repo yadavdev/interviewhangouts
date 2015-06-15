@@ -7,11 +7,16 @@ var ExpressPeerServer = require('peer').ExpressPeerServer;
 var options = {
     debug: true
 }
-
-app.use('/api', ExpressPeerServer(http, options));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  next();
+});
 
 var rooms=[];
 
+app.use('/api', ExpressPeerServer(http, options));
 app.use(express.static(__dirname + '/public/'));
 
 app.get('/:roomName', function(req, res){
@@ -36,7 +41,7 @@ io.on('connection', function(socket){
       }
 
       rooms[socket.room].user_array.splice(user_idx,1);
-      console.log(rooms[socket.room].user_array);
+      //console.log(rooms[socket.room].user_array);
 
       if(rooms[socket.room].user_array.length === 0){
         delete rooms[socket.room];
@@ -77,8 +82,8 @@ io.on('connection', function(socket){
       }
         socket.join(socket.room);
         io.sockets.in(socket.room).emit('usr_connect', rooms[socket.room].user_array);
-        io.to(socket.id).emit('socket_id',socket.id);
-        console.log(socket.user+" connected.");
+        io.to(socket.id).emit('socket_id',{"myid":socket.id, "port":process.env.PORT});
+       // console.log(socket.user+" connected.");
       });
 
     socket.on('chatmsg', function(msg){
@@ -126,6 +131,6 @@ io.on('connection', function(socket){
 
 });
 
-http.listen((process.env.PORT || 5000), function(){
-  //console.log('listening on port: %s', 5000);
+http.listen( (process.env.PORT || 5000), function(){
+  console.log('listening on port: %s',process.env.PORT );
 });
