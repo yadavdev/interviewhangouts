@@ -8,7 +8,8 @@ $(function(){ //Initialise codemirror with options
         mode: "text/x-c++src"
     });
      $("#calling-peer").hide();
-      $("#end-call").hide();
+     $("#end-call").hide();
+     $("#reconnect-peer").hide();
      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
       step1();
     editor.on("keyup", function(){
@@ -198,7 +199,10 @@ $(function(){ //Initialise codemirror with options
         $("#end-call").hide();
       });
 
-   
+   $('#reconnect-peer').click(function(){
+        peer.reconnect();
+        $("#reconnect-peer").hide();
+      });
 
 });    
     socket = io();
@@ -215,12 +219,18 @@ $(function(){ //Initialise codemirror with options
     var num_users =0;
 
     socket.on('socket_id', function(id){
-            my_socket_id=id.replace(/[^a-z0-9]/gi,'');
-          //  alert(my_socket_id);
-                  peer = new Peer(my_socket_id, {host: 'localhost', port: 5000, path: '/api'});//new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
+            my_socket_id=(id.myid).replace(/[^a-z0-9]/gi,'');
+           // alert(id.port);
+                  peer = new Peer(my_socket_id, {host: 'interviewhangouts.herokuapp.com', port:80, path: '/api'});//new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
 
             peer.on('open', function(){
                 //alert("peer object created: "+peer.id+"\n socket.id:"+my_socket_id);
+               // alert("connected to server!");
+               $("#freeow").freeow("connected to server.","All modules enabled." , {
+                    classes: ["smokey", "pushpin"],
+                    autoHide: true,
+                    autoHideDelay:2000
+                    });
             });
 
             // Receiving a call
@@ -234,8 +244,14 @@ $(function(){ //Initialise codemirror with options
                 $("#freeow").freeow("PeerJs Error Occured:",err.message + "\nPlease Reload the page." , {
                     classes: ["smokey", "pushpin"],
                     autoHide: true,
-                    autoHideDelay:8000
+                    autoHideDelay:5000
                     });
+                if(err.message == 'Lost connection to server.'){
+                  alert("Error detected: try-reconnect or reload.");
+                  $("#reconnect-peer").show();
+
+                }
+
             });
 
         });
@@ -322,7 +338,7 @@ function step2 () {
     $("#freeow").freeow("Video Chat", "The text Chat is already active. To start a video chat click on person's name and select video chat.", {
                     classes: ["smokey", "pushpin"],
                     autoHide: true,
-                    autoHideDelay:8000
+                    autoHideDelay:5000
                     });
 
 }
@@ -331,6 +347,7 @@ function step3 (call) {
     // Hang up on an existing call if present
     if (window.existingCall) {
         window.existingCall.close();
+        $("#end-call").hide();
     }
 
     // Wait for stream on the call, then set peer video display
@@ -347,6 +364,7 @@ function step3 (call) {
                     autoHide: true,
                     autoHideDelay:5000
                     });
+        $("#end-call").hide();
     });
 }
 
