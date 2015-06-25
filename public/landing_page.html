@@ -27,24 +27,34 @@
 <script src="./js/elementTransitions.js"></script>
 <div class="container-fluid">
     <div class="page-header text-center">
-    <h1 class="h1" ><span></span> Interview Hangouts</h1>
+    <h1 class="h1" ><span class="glyphicon glyphicon-phone-alt"></span> Interview Hangouts</h1>
     </div>
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="et-wrapper" style="height:50vh;">
+        <div class="col-md-12">
+            <div class="et-wrapper text-center" style="height:75vh;">
                 <div class="et-page" style="background-color: #006666">
-                    <h2>Page 1</h2>
+
                     <!-- <button class="et-rotate" et-in="rotateCarouselRightIn" et-out="rotateCarouselRightOut">Next</button>
                     -->
-                    <input type="text" class="form-control" placeholder="Enter Your Name.."><button class="btn btn-md btn-success et-rotate" et-in="moveFromLeft" et-out="moveToRight">Go</button>
-
-                </div>
-                <div class="et-page" style="background-color: #0055aa">
-                    <h2>Page 2</h2>
-                    <button class="et-rotate" et-in="moveFromLeft" et-out="moveToRight">Back</button>
-                    <form class="form-inline">
-                        <input type="text" class="form-control" placeholder="Enter Your Name.."><button class="btn btn-md btn-success">Go</button>
-                    </form>
+                    <h3 class="h3" style="color: white">Enter a room link or <button class="btn btn-md btn-default">Create New Room</button></h3>
+                    <div class="input-group" style="width:50%;margin:auto;">
+                    <input type="text" class="form-control" placeholder="eg: inteviewhangouts.xxx.com/XzDWeRqocE">
+                    <span class="input-group-btn">
+                              <button class="btn btn-md btn-success et-rotate" et-in="moveFromLeft" et-out="moveToRight">Continue</button>
+                        </span>
+                    </div>
+                    </div>
+                <div class="et-page" style="background-color: darkslategray;color:white">
+                    <h4 class="h4">Share this link to invite people: <span style="color: goldenrod">inteviewhangouts.xxx.com/XzDWeRqocE</span></h4>
+                    <button class="et-rotate btn btn-md btn-default" et-in="moveFromLeft" et-out="moveToRight"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+                    <h3 class="h3" style="color: white">
+                        Enter Your Name</h3>
+                    <div class="input-group" style="width:50%;margin:auto;">
+                        <input type="text" class="form-control" placeholder="Eg: John Smith" >
+                    <span class="input-group-btn">
+                              <button class="btn btn-md btn-success" >Enter room</button>
+                        </span>
+                    </div>
                 </div>
             </div></div>
     </div>
