@@ -1,159 +1,27 @@
-$(function (){
+$(function(){	
 
-  var startElement = 0,
-  animEndEventNames = {
-    'WebkitAnimation': 'webkitAnimationEnd',
-    'OAnimation': 'oAnimationEnd',
-    'msAnimation': 'MSAnimationEnd',
-    'animation': 'animationend'
-  }
-
-  function getTransitionPrefix() {
-    var b = document.body || document.documentElement;
-    var s = b.style;
-    var p = 'animation';
-    if(typeof s[p] == 'string')
-      return 'animation';
-
-    // Tests for vendor specific prop
-    var v = ['Moz', 'Webkit', 'Khtml', 'O', 'ms'],
-    p = p.charAt(0).toUpperCase() + p.substr(1);
-    for( var i=0; i<v.length; i++ ) {
-      if(typeof s[v[i] + p] == 'string')
-        return v[i] + p;
-    }
-    return false;
-  }
-  // animation end event name
-  animEndEventName = animEndEventNames[getTransitionPrefix()];
-
-  function init() {
-    $(".et-page").each(function() {
-      $(this).data('originalClassList', $(this).attr('class'));
-    });
-    $(".et-wrapper").each(function() {
-      $(this).data('current', 0);
-      $(this).data('isAnimating', false);
-      $(this).children(".et-page").eq(startElement).addClass('et-page-current');
-    });
-  }
-
-  function animate(block, callback) {
-    var outClass = formatClass($(block).attr('et-out')),
-        inClass  = formatClass($(block).attr('et-in')),
-        step     = $(block).attr('et-step'),
-        block    = $(block).closest('.et-wrapper')
-
-    if (step === undefined)
-      step = 1;
-
-    block = $(block);
-    var current = block.data('current'),
-        $pages = block.children('.et-page'),
-        pagesCount = $pages.length,
-        endCurrPage = false,
-        endNextPage = false;
-
-    if(block.data('isAnimating')) {
-      return false;
-    }
-
-    block.data('isAnimating', true);
-
-    var $currPage = $pages.eq(current);
-    current = current*1 + step*1;
-    if (current >= pagesCount) {
-      current=0;
-    }
-
-    block.data('current', current);
-
-    var $nextPage = $pages.eq(current);
-
-    outClass.forEach(function(c) {
-      $currPage.addClass(c);
-    });
-
-    $currPage.on(animEndEventName, function() {
-      $currPage.off(animEndEventName);
-      endCurrPage = true;
-      if(endNextPage) {
-        if(jQuery.isFunction(callback)) {
-          callback(block, $nextPage, $currPage);
-        }
-        onEndAnimation($currPage, $nextPage, block);
-      }
-    });
-
-    inClass.forEach(function(c) {
-      $nextPage.addClass(c);
-    });
-    $nextPage.addClass("et-page-current");
-
-    $nextPage.on(animEndEventName, function() {
-      $nextPage.off(animEndEventName);
-      endNextPage = true;
-      if(endCurrPage) {
-        onEndAnimation($currPage, $nextPage, block);
-      }
-    });
-  }
-
-  function onEndAnimation($outpage, $inpage, block) {
-    resetPage($outpage, $inpage);
-    $outpage.trigger("animation.out.complete");
-    $inpage.trigger("animation.in.complete");
-    block.data('isAnimating', false);
-  }
-
-  function resetPage($outpage, $inpage) {
-    $outpage.attr('class', $outpage.data( 'originalClassList'));
-    $inpage.attr('class', $inpage.data( 'originalClassList') + ' et-page-current');
-  }
-
-  function formatClass(str) {
-    var classes = str.split(" ");
-    var output = [];
-    for(var i=0; i<classes.length; i++){
-      output.push("pt-page-" + classes[i]);
-    }
-    return output;
-  }
-	
 	var roomid="";
 
 	$(".createNewRoom").click(function () {
-		animate($(this));
     	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for( var i=0; i < 10; i++ )
-        roomid += possible.charAt(Math.floor(Math.random() * possible.length));    	
+    	for( var i=0; i < 10; i++ )
+        	roomid += possible.charAt(Math.floor(Math.random() * possible.length));    	
 	
+		window.location.href = window.location  +roomid;
 	});
 
 	$(".RoomUrl").click(function() {
-      roomid = $(".copyroomurl").val();
-      roomid = roomid.slice(-10);
-      if(/[^a-zA-Z0-9]/.test( roomid ))
-      		alert("Please enter a valid 10 character long id.\n Eg.Fcer9vtsre");
+      
+      	roomid = $(".copyroomurl").val();
+      
+      	roomid = roomid.slice(-10);
+      
+      	if(/[^a-zA-Z0-9]/.test( roomid ))
+      		alert("Please enter a valid link or 10 character long roomid.\n Eg.Fcer9vtsre");
       	
-      else{
-			animate($(this));
-			$("#pasteroomurl").val = roomid;
-      }
-      //alert(roomid);
+      	else
+			window.location.href = window.location +roomid;
+      
     });
-	$(".et-rotate").click(function() {
-      animate($(this));
-    });
-	$(".EnterRoom").click(function() {
-      window.location.href = window.location + "/" +roomid + "?user=" + urlencode(username);
-    });
-
-
-
-
-0
-init();
-
 });
