@@ -7,11 +7,12 @@ $(function(){ //Initialise codemirror with options
         matchBrackets: true,
         mode: "text/x-c++src"
     });
+     $('#nameModal').modal('show'); 
      $("#calling-peer").hide();
      $("#end-call").hide();
      $("#reconnect-peer").hide();
      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-      step1();
+     
     editor.on("keyup", function(){
             socket.emit('Edit_Request',editor.getValue());
       });  
@@ -25,15 +26,8 @@ $(function(){ //Initialise codemirror with options
       $(".CodeMirror-gutters").css('height',req_height-30);
       $("#video-container").css('height',req_height-20);
       $(".user_list").html("<div style='color:white'>0 person online in this room</div>");
-      $(".user_span").html("<h5 class='h5' style='color:white'>Hello <b><u>" + user + "</u></b></h4>" );
-
           var myroom = window.location.pathname;
               myroom = myroom.slice(1);
-
-         socket.emit('addToRoom',{'room':myroom, 'user':user});
-         $("#roompath").val(window.location);
-
-
 
     $( ".editor_language" ).change(function() {
             if($(".editor_language").val() == "cpp"){
@@ -203,19 +197,37 @@ $(function(){ //Initialise codemirror with options
         peer.reconnect();
         $("#reconnect-peer").hide();
       });
+   $(".EnterRoom").click(function(){
+        user = $(".username").val();
+        if(user!="" && !(/[^A-Za-z0-9 ]/.test(user))){ 
+            $("#nameModal").modal('hide');
+            
+            $(".user_span").html("<h5 class='h5' style='color:white'>Hello <b><u>" + user + "</u></b></h4>" );
+            socket.emit('addToRoom',{'room':myroom, 'user':user});
+            $("#roompath").val(window.location);
+            step1();
+      }
+      else{
+        alert("Name should contain only alphanumeric characters.");
+        
+      }
+
+
+   });
+
 
 });    
     socket = io();
     
     user_online_array = "";
-
-    user = prompt("Please Enter Your Name","");
+      user="demouser";
+    //user = prompt("Please Enter Your Name","");
 
     my_socket_id ="";
 
-    while (user == ""){
-        user = prompt("Please Enter Your Name","");
-    }
+    //while (user == ""){
+      //  user = prompt("Please Enter Your Name","");
+    //}
     var num_users =0;
 
     socket.on('socket_id', function(id){
