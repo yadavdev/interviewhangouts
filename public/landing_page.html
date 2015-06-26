@@ -22,8 +22,8 @@
 <body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/landing_page.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 <script src="./js/elementTransitions.js"></script>
 <div class="container-fluid">
     <div class="page-header text-center">
@@ -33,26 +33,23 @@
         <div class="col-md-12">
             <div class="et-wrapper text-center" style="height:75vh;">
                 <div class="et-page" style="background-color: #006666">
-
-                    <!-- <button class="et-rotate" et-in="rotateCarouselRightIn" et-out="rotateCarouselRightOut">Next</button>
-                    -->
-                    <h3 class="h3" style="color: white">Enter a room link or <button class="btn btn-md btn-default">Create New Room</button></h3>
+                    <h3 class="h3" style="color: white">Enter a room link or <button class="btn btn-md btn-default createNewRoom" et-in="moveFromLeft" et-out="moveToRight">Create New Room</button></h3>
                     <div class="input-group" style="width:50%;margin:auto;">
-                    <input type="text" class="form-control" placeholder="eg: inteviewhangouts.xxx.com/XzDWeRqocE">
+                    <input type="text" class="form-control copyroomurl" placeholder="eg: inteviewhangouts.xxx.com/XzDWeRqocE">
                     <span class="input-group-btn">
-                              <button class="btn btn-md btn-success et-rotate" et-in="moveFromLeft" et-out="moveToRight">Continue</button>
+                              <button class="btn btn-md btn-success RoomUrl" et-in="moveFromLeft" et-out="moveToRight">Continue</button>
                         </span>
                     </div>
                     </div>
                 <div class="et-page" style="background-color: darkslategray;color:white">
-                    <h4 class="h4">Share this link to invite people: <span style="color: goldenrod">inteviewhangouts.xxx.com/XzDWeRqocE</span></h4>
+                    <h4 class="h4">Share this room id to invite people: <span id="pasteroomurl" style="color: goldenrod"></span></h4>
                     <button class="et-rotate btn btn-md btn-default" et-in="moveFromLeft" et-out="moveToRight"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
                     <h3 class="h3" style="color: white">
                         Enter Your Name</h3>
                     <div class="input-group" style="width:50%;margin:auto;">
-                        <input type="text" class="form-control" placeholder="Eg: John Smith" >
+                        <input type="text" class="form-control username" placeholder="Eg: John Smith" >
                     <span class="input-group-btn">
-                              <button class="btn btn-md btn-success" >Enter room</button>
+                              <button class="btn btn-md btn-success EnterRoom" >Enter room</button>
                         </span>
                     </div>
                 </div>

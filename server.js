@@ -17,6 +17,10 @@ app.use(function(req, res, next) {
 var rooms=[];
 
 app.use('/api', ExpressPeerServer(http, options));
+app.get('/', function(req, res){
+  activeChat=req.params.roomName;
+  res.sendFile(__dirname +'/public/landing_page.html');
+});
 app.use(express.static(__dirname + '/public/'));
 
 app.get('/:roomName', function(req, res){
