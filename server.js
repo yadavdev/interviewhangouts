@@ -18,7 +18,6 @@ var rooms=[];
 
 app.use('/api', ExpressPeerServer(http, options));
 app.get('/', function(req, res){
-  activeChat=req.params.roomName;
   res.sendFile(__dirname +'/public/landing_page.html');
 });
 app.use(express.static(__dirname + '/public/'));
@@ -30,7 +29,11 @@ app.get('/:roomName', function(req, res){
 
 
 io.on('connection', function(socket){
-    //console.log('a user connected');
+    console.log(' user connected %s',socket.id);
+    if(socket.user === undefined || socket.room === undefined){
+      io.to(socket.id).emit("giveuser");
+      //console.log("reconnect sent");
+    }
     socket.on('disconnect', function(){
       socket.leave(socket.room);
        var user_idx = -1;
@@ -136,5 +139,5 @@ io.on('connection', function(socket){
 });
 
 http.listen( (process.env.PORT || 5000), function(){
-  console.log('listening on port: %s',process.env.PORT );
+  console.log('listening on port: %s',5000 );
 });

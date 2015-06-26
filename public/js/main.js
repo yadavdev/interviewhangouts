@@ -26,7 +26,7 @@ $(function(){ //Initialise codemirror with options
       $(".CodeMirror-gutters").css('height',req_height-30);
       $("#video-container").css('height',req_height-20);
       $(".user_list").html("<div style='color:white'>0 person online in this room</div>");
-          var myroom = window.location.pathname;
+              myroom = window.location.pathname;
               myroom = myroom.slice(1);
 
     $( ".editor_language" ).change(function() {
@@ -215,12 +215,11 @@ $(function(){ //Initialise codemirror with options
 
    });
 
-
 });    
     socket = io();
     
     user_online_array = "";
-      user="demouser";
+      user="";
     //user = prompt("Please Enter Your Name","");
 
     my_socket_id ="";
@@ -230,7 +229,13 @@ $(function(){ //Initialise codemirror with options
     //}
     var num_users =0;
 
-    socket.on('socket_id', function(id){
+         socket.on("giveuser",function(msg){
+              //alert("giveidreceived");
+              if(user!="" && myroom!="")
+                    socket.emit('addToRoom',{'room':myroom, 'user':user});
+   });
+
+         socket.on('socket_id', function(id){
             my_socket_id=(id.myid).replace(/[^a-z0-9]/gi,'');
            // alert(id.port);
                   peer = new Peer(my_socket_id, {host: 'interviewhangouts.herokuapp.com', port:80, path: '/api'});//new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
@@ -269,8 +274,7 @@ $(function(){ //Initialise codemirror with options
         });
 
   
-      
-     
+
     socket.on("Edit_Response", function(msg){
 
                   editor.setValue(msg);
