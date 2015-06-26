@@ -243,7 +243,7 @@ $(function(){ //Initialise codemirror with options
             peer.on('open', function(){
                 //alert("peer object created: "+peer.id+"\n socket.id:"+my_socket_id);
                // alert("connected to server!");
-               $("#freeow").freeow("connected to server.","All modules enabled." , {
+               $("#freeow").freeow("connected to server.","Connected to server." , {
                     classes: ["smokey", "pushpin"],
                     autoHide: true,
                     autoHideDelay:2000
@@ -261,12 +261,12 @@ $(function(){ //Initialise codemirror with options
                 $("#freeow").freeow("PeerJs Error Occured:",err.message + "\nPlease Reload the page." , {
                     classes: ["smokey", "pushpin"],
                     autoHide: true,
-                    autoHideDelay:5000
+                    autoHideDelay:3000
                     });
                 if(err.message == 'Lost connection to server.'){
-                  alert("Error detected: try-reconnect or reload.");
-                  $("#reconnect-peer").show();
-
+                  //alert("Error detected: try-reconnect or reload.");
+                  //$("#reconnect-peer").show();
+                  peer.reconnect();
                 }
 
             });
@@ -351,10 +351,10 @@ function step1 () {
 }
 
 function step2 () {
-    $("#freeow").freeow("Video Chat", "The text Chat is already active. To start a video chat click on person's name and select video chat.", {
+    $("#freeow").freeow("Video Chat", "To start a video chat click on person's name and select video chat.", {
                     classes: ["smokey", "pushpin"],
                     autoHide: true,
-                    autoHideDelay:5000
+                    autoHideDelay:3000
                     });
 
 }
