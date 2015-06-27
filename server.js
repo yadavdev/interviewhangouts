@@ -29,7 +29,7 @@ app.get('/:roomName', function(req, res){
 
 
 io.on('connection', function(socket){
-    console.log(' user connected %s',socket.id);
+    //console.log(' user connected %s',socket.id);
     if(socket.user === undefined || socket.room === undefined){
       io.to(socket.id).emit("giveuser");
       //console.log("reconnect sent");
@@ -38,7 +38,6 @@ io.on('connection', function(socket){
       socket.leave(socket.room);
        var user_idx = -1;
       if(rooms[socket.room] != undefined){
-          console.log("undefined");
       for(var i=0;i<rooms[socket.room].user_array.length;i++){
 
         if(rooms[socket.room].user_array[i][0] === socket.user){
@@ -56,7 +55,7 @@ io.on('connection', function(socket){
       io.sockets.in(socket.room).emit('usr_disconnect', socket.user);
       console.log(socket.user+" Disconnected.");
     }
-    else console.log("undefined");
+    else console.log("Probable Server Restart. Disconnecting user to reconnect. user: %s room: %s",socket.user,socket.room);
 
     });
 
