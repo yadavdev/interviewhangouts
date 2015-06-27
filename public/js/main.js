@@ -272,7 +272,7 @@ $(function(){ //Initialise codemirror with options
                     if(peer.disconnected)
                           peer.reconnect();
                     else reconnectpeerserver();
-                    }, 10);  )();
+                    }, 10);  })();
                  }
                  else{
                  $("#freeow").freeow("error type: "+err.type +"\n PeerJs Error Occured:",err.message + "\nPlease Reload the page." , {
