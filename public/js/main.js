@@ -248,11 +248,11 @@ $(function(){ //Initialise codemirror with options
             peer.on('open', function(){
                 //alert("peer object created: "+peer.id+"\n socket.id:"+my_socket_id);
                // alert("connected to server!");
-               $("#freeow").freeow("connected to server.","Connected to server." , {
+               /*$("#freeow").freeow("connected to server.","Connected to server." , {
                     classes: ["smokey", "pushpin"],
                     autoHide: true,
                     autoHideDelay:2000
-                    });
+                    });*/
             });
 
             // Receiving a call
@@ -263,17 +263,24 @@ $(function(){ //Initialise codemirror with options
                 step3(call);
             });
             peer.on('error', function(err){
-                $("#freeow").freeow("PeerJs Error Occured:",err.message + "\nPlease Reload the page." , {
+                
+                if(err.message == 'Lost connection to server.'){
+                  //alert("Error detected: try-reconnect or reload.");
+                //  $("#reconnect-peer").show();
+                console.log(peer.disconnected);
+                  var reconnectpeerserver = (function() { setTimeout(function(){
+                    if(peer.disconnected)
+                          peer.reconnect();
+                    else reconnectpeerserver();
+                    }, 10);  )();
+                 }
+                 else{
+                 $("#freeow").freeow("error type: "+err.type +"\n PeerJs Error Occured:",err.message + "\nPlease Reload the page." , {
                     classes: ["smokey", "pushpin"],
                     autoHide: true,
                     autoHideDelay:3000
                     });
-                if(err.message == 'Lost connection to server.'){
-                  //alert("Error detected: try-reconnect or reload.");
-                  //$("#reconnect-peer").show();
-                  peer.reconnect();
                 }
-
             });
 
         });
