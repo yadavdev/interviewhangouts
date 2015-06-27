@@ -12,7 +12,9 @@ $(function(){ //Initialise codemirror with options
      $("#end-call").hide();
      $("#reconnect-peer").hide();
      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-     
+     $('#nameModal').on('shown.bs.modal', function() {
+        $(this).find('[autofocus]').focus();
+      });
     editor.on("keyup", function(){
             socket.emit('Edit_Request',editor.getValue());
       });  
@@ -199,7 +201,10 @@ $(function(){ //Initialise codemirror with options
       });
    $(".EnterRoom").click(function(){
         user = $(".username").val();
-        if(user!="" && !(/[^A-Za-z0-9 ]/.test(user))){ 
+        user = user.trim();
+        user = user.replace(/\s\s+/g, ' ');
+
+        if(user!="" && !(/[^A-Za-z0-9 ]/.test(user)) && user.length>3){ 
             $("#nameModal").modal('hide');
             
             $(".user_span").html("<h5 class='h5' style='color:white'>Hello <b><u>" + user + "</u></b></h4>" );
@@ -208,7 +213,7 @@ $(function(){ //Initialise codemirror with options
             step1();
       }
       else{
-        alert("Name should contain only alphanumeric characters.");
+        alert("1. Name should contain alphanumeric characters.\n 2. Length should be minimum 4 characters.");
         
       }
 
