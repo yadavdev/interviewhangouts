@@ -3,3 +3,4 @@ bootstrap/
 *#
 *.save
 .idea/
+*.ico
