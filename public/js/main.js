@@ -272,7 +272,7 @@ $(function(){ //Initialise codemirror with options
                     if(peer.disconnected)
                           peer.reconnect();
                     else reconnectpeerserver();
-                    }, 10);  })();
+                    }, 100);  })();
                  }
                  else{
                  $("#freeow").freeow("error type: "+err.type +"\n PeerJs Error Occured:",err.message + "\nPlease Reload the page." , {
@@ -307,6 +307,7 @@ $(function(){ //Initialise codemirror with options
 
     socket.on('usr_connect', function(users_array){
             $(".user_list").empty();
+            console.log("usr_list received");
             user_online_array = users_array;
             num_users=user_online_array.length -1;
             if(num_users ===0)
