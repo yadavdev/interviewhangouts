@@ -8,7 +8,7 @@ $(function(){
     mode: "text/x-c++src"
   });
   
-  //Initionalise view on load. 
+  //Initionalize view on load. 
   $("#calling-peer").hide();
   $("#end-call").hide();
   $("#reconnect-peer").hide();
@@ -197,7 +197,7 @@ $(function(){
       var chatmsg ='<li class="clearfix"><div class="chat-body clearfix" style="font-size:13px"><div class="header clearfix"><strong class="pull-right primary-font">'+user+'</strong></div><p class="text-left">'+document.getElementById('chatarea').value+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
       
       $(".chat").append(chatmsg);
-      $('#chatarea').value='';
+      $('#chatarea').val('');
 
       //Auto Scroll to latest message.
       var scrolltoh = $('.panel-body')[0].scrollHeight;
@@ -280,9 +280,8 @@ socket.on("giveuser",function(msg){
 
 //Receive socket.id of the user
 socket.on('socket_id', function(id){
-
   //Remove special characters from the socket id
-  my_socket_id=(id.myid).replace(/[^a-z0-9]/gi,'');
+  my_socket_id=(id).replace(/[^a-z0-9]/gi,'');
   
   //Initialise peerjs video chat client with socket.io server id.
   peer = new Peer(my_socket_id, {host: 'interviewhangouts.herokuapp.com', port:80, path: '/api'});//new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
@@ -333,7 +332,7 @@ socket.on("Edit_Response", function(msg){
 //Receive Chat messges from other users in the room.
 socket.on('chatmsg', function(msg){
   var d = new Date;
-  var chatmsg ='<li class="clearfix"><div class="chat-body clearfix"><div class="header clearfix"><strong class="primary-font pull-left" style="font-size:13px">'+msg.user+'</strong></div><p class="text-left">'+msg.msg+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
+  var chatmsg ='<li class="clearfix"><div class="chat-body clearfix" style="font-size:13px"><div class="header clearfix"><strong class="primary-font pull-left" >'+msg.user+'</strong></div><p class="text-left">'+msg.msg+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
   $(".chat").append(chatmsg);
   var scrolltoh = $('.panel-body')[0].scrollHeight;
   $('.panel-body').scrollTop(scrolltoh);
