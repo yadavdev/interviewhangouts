@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>InterviewHangouts</title>
+
+    <!--Scripts and Stylesheets-->
+    <link href="./css/main.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./css/buttonLoader.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/freeow.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet"  type="text/css" href="./css/codemirror.css">
+    <link rel="stylesheet"  type="text/css" href="./css/theme/ambiance.css">
+    <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script> 
+ <!--   <script type="text/javascript" src="./js/peer.js"></script>  -->
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="./js/codemirror.js"></script>
+    <script src="./js/mode/clike.js"></script>
+	<script src="./js/addons/active-line.js"></script>
+    <script src="./js/addons/matchbrackets.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap-select.min.js"></script>
+    <script src="./js/jquery.buttonLoader.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.freeow.min.js"></script>
+    <script src="./js/main.js"></script>
+</head>
+
+<body >
+<audio id="sound_chat" ><source src="./assets/beep.mp3" type="audio/mpeg"></audio>
+
+<!-- <div class="header-fixed-top container" ><h3 class="h3">InterviewHangouts  <span class="glyphicon glyphicon-phone-alt"></span></h3></div>
+<div class="col-md-12"><hr></div> -->
+
+<div class="container-fluid" style="padding-left:0px">
+
+<div class="page-header col-md-12" style="background-color:#4D4D4D;border:#4D4D4D;margin-top:0px;margin-bottom:0px;  padding:20px 10px 20px 10px;box-shadow:0px 0px 15px 0px rgba(0, 0, 0, 0.4);margin-right:15px">
+    <div class="col-md-5">
+	<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editorModal">Open Editor Options</button>
+    <select class="selectpicker editor_language" data-width="auto">
+                                
+                                <option class="mode_language" data-langid="2"value="cpp">C++</option>
+                                <option class="mode_language" data-langid="1" value="c">C</option>
+                                <option class="mode_language" data-langid="9"value="c#">C#</option>
+                                <option class="mode_language" data-langid="3"value="java">Java</option>
+                                <option class="mode_language" data-langid="#"value="javascript">Javascript</option> 
+                                <option class="mode_language" data-langid="12"value="haskell">Haskell</option>    
+                                <option class="mode_language" data-langid="#"value="html mixed">HTML mixed</option>
+                                <option class="mode_language" data-langid="7"value="php">PHP</option>
+                                <option class="mode_language" data-langid="5"value="python">Python 2</option>
+                                <option class="mode_language" data-langid="8"value="ruby">Ruby</option>
+                                <option class="mode_language" data-langid="15"value="scala">Scala</option>
+                                
+                            </select>
+    <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#codeModal">Run Code <span class="glyphicon glyphicon-chevron-right"></span></button>
+    </div>
+    
+    <div class="col-md-5 form-inline">
+        <label style="color:white">Share link to invite:&nbsp&nbsp</label><input type="text" class="form-control" id="roompath" readonly>
+    </div>
+
+    <span class="user_span pull-right" ></span>
+
+</div>
+
+	<div class="row" style="margin-right:0px">
+		<div class="col-md-6 editor-div" style="padding-top:20px;padding-left:30px">
+<textarea id="editor-area" rows="200" >
+//Choose a language.
+//Write Your code here..
+//Default is C++
+//Click "Run Code" to compile/interpret code.
+//Run Code not supported for javascript and html mixed languages.
+
+//Syntax highlighting supported.
+
+#include <stdio.h>
+
+int main()
+{
+return 0;
+}
+</textarea>
+		</div>
+
+	        <!-- Video area -->
+	     <div class="col-md-4" id="video-container" style="margin-top:20px;padding-top:10px;">
+	        <div style="position:relative; height:40%">
+	           <video id="their-video" autoplay></video>
+               <button class="btn btn-warning btn-md pull-left" id="calling-peer" style="padding:5px 5px 5px 5px;z-index:100;position:absolute; margin:0;left:40%;top:50%"><i class="fa fa-phone faa-ring animated "></i>  Calling...</button>
+               <div style="position:absolute; top:0;right:0; padding: 5px 5px 5px 5px;z-index:10"><a href="#" class="btn btn-dafault btn-xs" data-toggle="modal" onclick="vidfunctn();" data-target="#videoModal"><i class="fa fa-expand"></i></a></div>
+	           <div style="position:absolute; bottom:0;right:0">
+               <video class="" id="my-video" muted="true" autoplay>lol</video>
+               </div>
+            </div>
+
+	        <div class="panel panel-primary" style="margin-bottom: 0px;height:60%; border-radius:0px 0px 0px 0px">
+        <div class="panel-heading pull-left"  style="width:100%;height:10%;padding-top:3px;border-radius:0px 0px 0px 0px">
+            <div class="pull-left" style="padding-right:5px"><span class="glyphicon glyphicon-comment"></span> Chat</div>
+            <button class="btn btn-danger btn-sm pull-right" id="end-call" style="padding:5px 5px 5px 5px"><i class="fa fa-phone"></i> End Video Call</button>
+            <button class="btn btn-danger btn-sm pull-right" id="reconnect-peer" style="padding:5px 5px 5px 5px"><i class="fa fa-phone"></i> Try reconnecting server</button>
+        </div>
+            <div class="panel-body" style="height:75%;">
+                <ul class="chat">
+                </ul>
+            </div>
+            <div class="panel-footer" style="padding:0px 0px 0px 0px; bottom:0;right:0;height:15%;overflow:none;border-radius:0px 0px 0px 0px">
+                <textarea type="text" class="form-control input-sm" placeholder="Type your message here... Press ENTER to send and SHIFT+ENTER to newline." id="chatarea" style="resize:none;height:100%"></textarea>
+            </div>
+    </div>
+
+
+
+        </div>
+       
+
+<div class="col-md-2 user_box" style="background-color:#333;color:white;overflow:auto">
+         <div class="btn-group pull-right" style="padding: 5px 5px 5px 5px;width:100%">
+        <h4 class="h4"><button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-chevron-down"></span></button> You are Online <i class="fa fa-circle" style="color:green"></i>
+           <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Go Online <i class="fa fa-circle" style="color:green"></i></a></li>
+              <li class="divider"></li>
+              <li><a href="#">Go Offline <i class="fa fa-circle" style="color:red"></i></a></li>
+           </ul>
+        </h4></div>
+        <div class="user_list">
+      <!--  <div class="btn-group pull-right" style="padding: 5px 5px 5px 5px;width:100%">
+           <button type="button" class="btn btn-default dropdown-toggle btn-block" 
+              data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i>
+              John Adams <span class="caret"></span>
+           </button>
+           <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Video Chat</a></li>
+           </ul>
+        </div>
+        <div class="btn-group pull-right" style="padding: 5px 5px 5px 5px;width:100%">
+           <button type="button" class="btn btn-default dropdown-toggle btn-block" 
+              data-toggle="dropdown"><i class="fa fa-circle pull-left" style="color:green;"></i>
+              Cristy Sanders <span class="caret"></span>
+           </button>
+           <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Video Chat</a></li>
+            </ul>
+        </div> -->
+        </div>
+</div>
+
+
+	
+</div>
+</div>
+    <!-- Modal -->
+    <div id="editorModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Select Editor Options</h4>
+                    </div>
+                        <div class="row editor_option_row"><h4>Font:</h4></div>
+                            <select class="selectpicker editor_font" data-width="30%" >
+                                <option class="font_size" value="8">8px</option>
+                                <option class="font_size" value="9">9px</option>
+                                <option class="font_size" value="10">10px</option>
+                                <option class="font_size" value="11">11px</option>
+                                <option class="font_size" value="12">12px</option>
+                                <option class="font_size" value="13">13px</option>
+                                <option class="font_size" selected value="14">14px</option>
+                                <option class="font_size" value="15">15px</option>
+                                <option class="font_size" value="16">16px</option>
+                            </select>
+
+                        <div class="row editor_option_row"><h4>Key-Binding:</h4></div>
+                            <select class="selectpicker  editor_keymap" data-width="30%">
+                                <option class="mode_keymap" selected value="sublime">Sublime Text</option>
+                                <option class="mode_keymap" value="vim">Vim</option>
+                                <option class="mode_keymap" value="emacs">Emacs</option>
+                            </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Modal -->
+    <div id="codeModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="btn btn-info btn-md code_submit has-spinner" style="background-color:#333; border-color:#333" >Try Code <span class="glyphicon glyphicon-chevron-right"></span></button>
+                        </div>
+                    <div>
+                        <h4 class="h4">Give Input</h4>
+                        <div>
+                            <textarea class="code_input" rows="5" cols="50"></textarea>
+                        </div>
+                        <h4 class="h4">Output</h4>
+
+                        <div>
+                            <textarea class="code_output" rows="10" cols="50"></textarea>
+                        </div>
+                    </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div id="videoModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body" style="background-color: #31b0d5;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-compress"></i></button>
+                    <h4 class="modal-title h3"><strong>InterviewHangouts</strong></h4>
+                </div>
+                <div class="large-video-container">
+                <video class="their-video-large" id="their-video-large" autoplay></video>
+                <div class="small-video-container"><video class=" my-video-large" id="my-video-large" muted="true" autoplay></video></div>
+                </div>
+                </div>
+        </div>
+    </div>
+    </div>
+
+     <div id="nameModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body text-center" style="background-color: darkslategray;color:white;height:70vh">
+                <div class="modal-header"><h3 class="h3" style="color: white"> 
+                        Enter Your Name</h3></div>
+                    <!--<h4 class="h4">Share this room id to invite people: <span id="pasteroomurl" style="color: goldenrod"></span></h4>
+                    <button class="et-rotate btn btn-md btn-default" et-in="moveFromLeft" et-out="moveToRight"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>-->
+                    
+                    <div class="input-group" style="width:80%;margin:auto; margin-top:50px">
+                        <input type="text" class="form-control username" placeholder="Eg: John Smith" autofocus >
+                    <span class="input-group-btn">
+                              <button class="btn btn-md btn-success EnterRoom" >Enter room</button>
+                        </span>
+                    </div>
+                </div>
+              </div>  
+        </div>
+    </div>
+
+     <!-- TRYING AUTO CALL CONNECT -->
+        <!-- Steps -->
+        <!-- <div class="col-md-2">
+            <!- - Get local audio/video stream - ->
+            <div id="step1">
+                <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
+                <div id="step1-error">
+                    <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
+                    <a href="#" class="btn btn-danger btn-sm" id="step1-retry">Try again</a>
+                </div>
+            </div>
+
+            <!- - Make calls to others - ->
+            <div id="step2">
+                <p>Your id: <span id="my-id">...</span></p>
+                <p>Share this id with others so they can call you.</p>
+                <h3>Make a call</h3>
+                <div class="form-group">
+                    <input type="text" placeholder="Call user id..." id="callto-id">
+                    <a href="#" class="btn btn-success btn-sm" id="make-call">Call</a>
+                </div>
+            </div>
+
+            <!- - Call in progress - ->
+            <div id="step3">
+                <p>Currently in call with <span id="their-id">...</span></p>
+                <p><a href="#" class="btn btn-danger btn-sm" id="end-call">End call</a></p>
+            </div>
+        </div> -->
+<div id="freeow" class="freeow freeow-top-right"></div>
+</body>
+</html>
