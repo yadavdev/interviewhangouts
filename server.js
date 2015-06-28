@@ -4,9 +4,11 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var unirest = require('unirest');
 var ExpressPeerServer = require('peer').ExpressPeerServer;
+
 var options = {
     debug: true
 }
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -17,10 +19,13 @@ app.use(function(req, res, next) {
 var rooms=[];
 
 app.use('/api', ExpressPeerServer(http, options));
+
+
+app.use(express.static(__dirname + '/public/'));
+
 app.get('/', function(req, res){
   res.sendFile(__dirname +'/public/landing_page.html');
 });
-app.use(express.static(__dirname + '/public/'));
 
 app.get('/:roomName', function(req, res){
   activeChat=req.params.roomName;
@@ -110,14 +115,10 @@ io.on('connection', function(socket){
    });*/
  
      socket.on('Edit_Request', function(msg){
-      ////console.log('Editor request recieved');
       socket.broadcast.to(socket.room).emit('Edit_Response', msg);
-     // //console.log('Response Sent');
     });
 
     socket.on('test_code', function(msg){
-          //console.log("code check request received.")
-          //console.log(msg.src +"\n" +msg.lang);
            unirest.post("https://api.hackerrank.com/checker/submission.json")
           .strictSSL(false)
           .header("Content-Type", "application/x-www-form-urlencoded")
