@@ -41,112 +41,100 @@ $(function(){
 
   //Change code language. Import syntax highlighting code.
   $( ".editor_language" ).change(function() {
-            if($(".editor_language").val() == "cpp"){
-               $.getScript("./js/mode/clike.js", function(){
-                                 editor.setOption("mode","text/x-c++src");
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "c#"){
-               $.getScript("./js/mode/clike.js", function(){
-                                editor.setOption("mode","text/x-objectivec");
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "c"){
-               $.getScript("./js/mode/clike.js", function(){
-                         editor.setOption("mode","text/x-csrc");
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "java"){
-               $.getScript("./js/mode/clike.js", function(){
-                                 editor.setOption("mode","text/x-java");
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "haskell"){
-               $.getScript("./js/mode/haskell.js", function(){
-                                 editor.setOption("mode","haskell");
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "scala"){
-               $.getScript("./js/mode/clike.js", function(){
-                                editor.setOption("mode","text/x-scala");
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "html mixed"){
-                $.getScript("./js/mode/xml.js", function(){ });
-                $.getScript("./js/mode/javascript.js", function(){});
-                $.getScript("./js/mode/css.js", function(){});
-                $.getScript("./js/mode/vbscript.js", function(){});
-                $.getScript("./js/mode/htmlmixed.js", function(){});
-                var mixedMode = {
-                    name: "htmlmixed",
-                    scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
-                       mode: null},
-                      {matches: /(text|application)\/(x-)?vb(a|script)/i,
-                       mode: "vbscript"}]
-                };
-                                 editor.setOption("mode",mixedMode);
-                               // alert("Script loaded and executed.");
-            }
-            else if($(".editor_language").val() == "php"){
-                $.getScript("./js/mode/htmlmixed.js", function(){ });
-                $.getScript("./js/mode/xml.js", function(){ });
-                $.getScript("./js/mode/javascript.js", function(){ });
-                $.getScript("./js/mode/css.js", function(){ });
-                $.getScript("./js/mode/clike.js", function(){ });
-                $.getScript("./js/mode/php.js", function(){
-                                editor.setOption("mode", "application/x-httpd-php");
-                                editor.setOption("indentUnit", 4);
-                                editor.setOption("indentWithTabs", true);
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "python"){
-               $.getScript("./js/mode/python.js", function(){
-                                editor.setOption("mode", "python");
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "ruby"){
-               $.getScript("./js/mode/ruby.js", function(){
-                                editor.setOption("mode","text/x-ruby");
-                                //alert("Script loaded and executed.");
-                });
-            }
-            else if($(".editor_language").val() == "javascript"){
-               $.getScript("./js/mode/javascript.js", function(){
-                               editor.setOption("mode","javascript");
-                                //alert("Script loaded and executed.");
-                });
-            }
-        }); 
+    switch ($(".editor_language").val()) {
+      case "cpp":
+        $.getScript("./js/mode/clike.js", function(){
+          editor.setOption("mode","text/x-c++src");
+        });
+        break;
+      case "c#":
+        $.getScript("./js/mode/clike.js", function(){
+          editor.setOption("mode","text/x-objectivec");
+        });
+        break;
+      case "c":
+        $.getScript("./js/mode/clike.js", function(){
+          editor.setOption("mode","text/x-csrc");
+        });
+        break;
+      case "java":
+        $.getScript("./js/mode/clike.js", function(){
+          editor.setOption("mode","text/x-java");
+        });
+        break;
+      case "haskell":
+        $.getScript("./js/mode/haskell.js", function(){
+          editor.setOption("mode","haskell");
+        });
+        break;
+      case "scala":
+        $.getScript("./js/mode/clike.js", function(){
+          editor.setOption("mode","text/x-scala");
+        });
+        break;
+      case  "html mixed":
+        $.getScript("./js/mode/xml.js", function(){ });
+        $.getScript("./js/mode/javascript.js", function(){});
+        $.getScript("./js/mode/css.js", function(){});
+        $.getScript("./js/mode/vbscript.js", function(){});
+        $.getScript("./js/mode/htmlmixed.js", function(){});
+        var mixedMode = {
+            name: "htmlmixed",
+            scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+               mode: null},
+              {matches: /(text|application)\/(x-)?vb(a|script)/i,
+               mode: "vbscript"}]
+        };
+        editor.setOption("mode",mixedMode);
+        break;
+      case "php":
+        $.getScript("./js/mode/htmlmixed.js", function(){ });
+        $.getScript("./js/mode/xml.js", function(){ });
+        $.getScript("./js/mode/javascript.js", function(){ });
+        $.getScript("./js/mode/css.js", function(){ });
+        $.getScript("./js/mode/clike.js", function(){ });
+        $.getScript("./js/mode/php.js", function(){
+          editor.setOption("mode", "application/x-httpd-php");
+          editor.setOption("indentUnit", 4);
+          editor.setOption("indentWithTabs", true);
+        });
+      case "python":
+        $.getScript("./js/mode/python.js", function(){
+          editor.setOption("mode", "python");
+        });
+      case  "ruby":
+        $.getScript("./js/mode/ruby.js", function(){
+          editor.setOption("mode","text/x-ruby");
+        });
+      case  "javascript":
+        $.getScript("./js/mode/javascript.js", function(){
+          editor.setOption("mode","javascript");
+        });
+    }
+  });
+  
+  $( ".editor_keymap" ).change(function() {
+    switch ($(".editor_keymap").val()) {
+      
+      case "sublime":
+        $.getScript("./js/mode/sublime.js", function(){
+          editor.setOption("keyMap","sublime");
+        });
+        break;
+      
+      case "emacs":
+        $.getScript("./js/mode/emacs.js", function(){
+        editor.setOption("keyMap","emacs");
+        });
+        break;
+    
+      case "vim":
+        $.getScript("./js/mode/vim.js", function(){
+        editor.setOption("keyMap","vim");
+    });
+    }
 
-     $( ".editor_keymap" ).change(function() {
-            if($(".editor_keymap").val() == "sublime"){
-               $.getScript("./js/mode/sublime.js", function(){
-                               editor.setOption("keyMap","sublime");
-                                //alert("Script loaded and executed.");
-                });
-            } else  if($(".editor_keymap").val() == "vim"){
-               $.getScript("./js/mode/vim.js", function(){
-                               editor.setOption("keyMap","vim");
-                                //alert("Script loaded and executed.");
-                });
-            } else  if($(".editor_keymap").val() == "emacs"){
-               $.getScript("./js/mode/emacs.js", function(){
-                               editor.setOption("keyMap","emacs");
-                                //alert("Script loaded and executed.");
-                });
-            }
-        
-
-
-     });
+  });
 
   //Chage in editor font
   
