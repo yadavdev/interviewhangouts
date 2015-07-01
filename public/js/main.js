@@ -18,7 +18,6 @@ $(function(){
   });
   $(".code_output").val("#Output will be displayed here.#");
   $(".code_output").prop('disabled', true);
-  $(".user_list").html("<div style='color:white'>0 person online in this room</div>");
   
 
   
