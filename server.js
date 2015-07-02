@@ -133,6 +133,10 @@ io.on('connection', function(socket){
     socket.broadcast.to(socket.room).emit('chatmsg',{"user":socket.user,"msg":msg});
   });
 
+  socket.on('usertyping', function(user){
+    socket.broadcast.to(socket.room).emit('usertyping',user);
+  });
+
   //Recieve text user is writing in editor broadcast to other users.
   socket.on('Edit_Request', function(msg){
     socket.broadcast.to(socket.room).emit('Edit_Response', msg);

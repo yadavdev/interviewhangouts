@@ -224,6 +224,28 @@ $(function(){
     socket.emit('Edit_Request',editor.getValue());
   });
 
+var textarea = $('#chatarea');
+var typingStatus = $('.typingstatus');
+var lastTypedTime = new Date(0); //lastTypedTime it's 01/01/1970, actually some time in the past
+var typingDelayMillis = 1000; // typingDelayMillis how long user can "think about his spelling" before we show "No one is typing -blank space." message
+
+function refreshTypingStatus() {
+    if (!textarea.is(':focus') || textarea.val() == '' || new Date().getTime() - lastTypedTime.getTime() > typingDelayMillis) {
+    } else {
+        socket.emit('usertyping',user);
+    }
+}
+function updateLastTypedTime() {
+    lastTypedTime = new Date();
+}
+
+setInterval(refreshTypingStatus, 100);
+textarea.keypress(updateLastTypedTime);
+textarea.blur(refreshTypingStatus);
+
+
+
+
 });    
 
 
@@ -250,7 +272,7 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 
 //Number of users online in current room
 var num_users =0;
-
+var usertypingtimer = null;
 //Room id from the url                
 myroom = window.location.pathname;
 myroom = myroom.slice(1);
@@ -316,9 +338,27 @@ socket.on("Edit_Response", function(msg){
   editor.setValue(msg);
 });
 
+socket.on("usertyping", function(typinguser){
+   $('.typingstatus').html(typinguser+' is typing...');   
+
+   if (usertypingtimer) {
+    clearTimeout(usertypingtimer); //cancel the previous timer.
+    usertypingtimer = null;
+    }
+  usertypingtimer = setTimeout(function(){
+    $('.typingstatus').html('');
+    }, 1000);
+   
+    
+});
+
+
 //Receive Chat messges from other users in the room.
 socket.on('chatmsg', function(msg){
   var d = new Date;
+  clearTimeout(usertypingtimer); //cancel the previous timer.
+  usertypingtimer = null;
+  $('.typingstatus').html('');
   var chatmsg ='<li class="clearfix"><div class="chat-body clearfix" style="font-size:13px"><div class="header clearfix"><strong class="primary-font pull-left" >'+msg.user+'</strong></div><p class="text-left">'+msg.msg+'</p><small class="pull-right text-muted timespan"><span class="glyphicon glyphicon-time"> </span>'+ d.getHours()+':'+d.getMinutes() +'</small></div></li>';
   $(".chat").append(chatmsg);
   var scrolltoh = $('.panel-body')[0].scrollHeight;
