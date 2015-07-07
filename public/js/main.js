@@ -58,11 +58,11 @@ $(function(){
     doc_id = doc_id.replace('pub','embed');
     $('.stoppresentation').show();
     $('.presentationarea').hide();
-    $('.presentationmode').append('<iframe width="960" height="749" class="myframe" frameborder="0" style="width:100%" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'+doc_id+'">');
+    $('.presentationmode').append('<div class="presentationframe"><iframe width="960" height="749" class="myframe" frameborder="0" style="width:100%" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'+doc_id+'"></div>');
     $('.myframe').css('height',req_height-60);
   });
   $('.stoppresentation').click(function(){
-        $('presentationmode:last-child', this).remove();
+        $('.presentationframe').remove();
         $('.presentationarea').show();
         $('.stoppresentation').hide();
     });
