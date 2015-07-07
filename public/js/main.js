@@ -60,11 +60,13 @@ $(function(){
     $('.presentationarea').hide();
     $('.presentationmode').append('<div class="presentationframe"><iframe width="960" height="749" class="myframe" frameborder="0" style="width:100%" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'+doc_id+'"></div>');
     $('.myframe').css('height',req_height-60);
+    socket.emit('presentation',{'command':'start', 'link':doc_id});
   });
   $('.stoppresentation').click(function(){
         $('.presentationframe').remove();
         $('.presentationarea').show();
         $('.stoppresentation').hide();
+        socket.emit('presentation',{'command':'stop', 'link':''});
     });
   
   
@@ -453,6 +455,31 @@ socket.on("result", function(msg){
     //alert("Server side error.\nPlease retry or reload the page.\n Error:\n"+ err.message +"\nNote: There is a problem with 'scanf' function in c/c++.\n If you are using it please use cin instead for now." );
   }
 }); 
+
+socket.on('presentation', function(data){
+  
+  if(data.command==='start'){
+    var frameid = data.link;
+    $('.presentationarea').hide();
+    $('.presentationmode').append('<div class="presentationframe"><iframe width="960" height="749" class="myframe" frameborder="0" style="width:100%" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'+frameid+'"></div>');
+    $('.myframe').css('height',$(".CodeMirror").css('height'));
+    $("#freeow").freeow("PowerPoint Presentation", data.presenter+' has started a presentation. Please click "switch to presentation mode" to view it.', {
+        classes: ["smokey", "pushpin"],
+        autoHide: false
+      });
+  }
+  else if(data.command==='stop'){
+        $('.presentationframe').remove();
+        $('.presentationarea').show();
+        $("#freeow").freeow("PowerPoint Presentation", data.presenter+' has stopped the presentation.', {
+        classes: ["smokey", "pushpin"],
+        autoHide: 2000
+      });
+      }
+  });
+
+
+
 
 //##############################################################################################
 /*

@@ -142,6 +142,10 @@ io.on('connection', function(socket){
     socket.broadcast.to(socket.room).emit('Edit_Response', msg);
   });
 
+  //load presentation
+  socket.on('presentation', function(link){
+    socket.broadcast.to(socket.room).emit('presentation',{'command':link.command,'link':link.link, 'presenter':socket.user});
+  });
   /*
       Receive code running request.
       Send data to hackerrank api using unirest.
