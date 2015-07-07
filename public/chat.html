@@ -41,41 +41,90 @@
 
 <body>
 <div class="container-fluid" style="padding-left:0px">
-    <div class="page-header col-md-12" style="background-color:#4D4D4D;border:#4D4D4D;margin-top:0px;margin-bottom:0px;  padding:20px 10px 20px 10px;box-shadow:0px 0px 15px 0px rgba(0, 0, 0, 0.4);margin-right:15px">
-        <div class="col-md-5">
-    	   <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editorModal">Open Editor Options</button>
-            <select class="selectpicker editor_language" data-width="auto">
-                <option class="mode_language" data-langid="2"value="cpp">C++</option>
-                <option class="mode_language" data-langid="1" value="c">C</option>
-                <option class="mode_language" data-langid="9"value="c#">C#</option>
-                <option class="mode_language" data-langid="3"value="java">Java</option>
-                <option class="mode_language" data-langid="#"value="javascript">Javascript</option> 
-                <option class="mode_language" data-langid="12"value="haskell">Haskell</option>    
-                <option class="mode_language" data-langid="#"value="html mixed">HTML mixed</option>
-                <option class="mode_language" data-langid="7"value="php">PHP</option>
-                <option class="mode_language" data-langid="5"value="python">Python 2</option>
-                <option class="mode_language" data-langid="8"value="ruby">Ruby</option>
-                <option class="mode_language" data-langid="15"value="scala">Scala</option>
-            </select>
-            <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#codeModal">Run Code <span class="glyphicon glyphicon-chevron-right"></span></button>
+     <div class="page-header col-md-12" style="background-color:#4D4D4D;border:#4D4D4D;margin-top:0px;margin-bottom:0px;  padding:20px 10px 20px 10px;box-shadow:0px 0px 15px 0px rgba(0, 0, 0, 0.4);margin-right:15px">
+        <div class="col-md-4">
+            <h3 class="h3" style="color:white;margin:0"><span class="glyphicon glyphicon-phone-alt" style="color:grey"></span> InterviewHangouts</h3>   
         </div>
-        
-        <div class="col-md-5 form-inline">
+        <div class="col-md-6 form-inline">
             <label style="color:white">Share link to invite:&nbsp&nbsp</label><input type="text" class="form-control" id="roompath" readonly>
         </div>
         <span class="user_span pull-right" ></span>
     </div>
 
-	<div class="row" style="margin-right:0px">
+    <div class="row" style="margin-right:0px">
         <div class="col-md-6 editor-div" style="padding-top:20px;padding-left:30px">
-            <textarea id="editor-area" rows="200" >
-//Choose a language.
-//Write Your code here..
-//Default is C++
-//Click "Run Code" to compile/interpret code.
-//Run Code not supported for javascript and html mixed languages.
+            <div style="background-color:#555">
+                <button  class="btn btn-success btn-sm choosemode" value="presentation">Switch to Presentation Mode<span class="glyphicon glyphicon-chevron-right"></span></button>
+                <button type="button" class="btn btn-danger btn-sm stoppresentations pull-right" style="display:none" >Stop Presentation <span class="gyphicon glyphicon-chevron-down"></span></button>
+                <button type="button" class="btn btn-danger btn-sm runcode editorpanelbuttons pull-right" data-toggle="modal" data-target="#codeModal">Run Code <span class="gyphicon glyphicon-chevron-right"></span></button>
+                <button class="btn btn-sm btn-default fontsizeup editorpanelbuttons pull-right"><i class="fa fa-font" style="font-size:15px;"></i></button>
+                <button class="btn btn-sm btn-default fontsizedown editorpanelbuttons pull-right"><i class="fa fa-font" style="font-size:10px"></i></button>
+                <select class="selectpicker editor_language editorpanelbuttons pull-right" data-width="auto">
+                    <option class="mode_language" data-langid="2"value="cpp">C++</option>
+                    <option class="mode_language" data-langid="1" value="c">C</option>
+                    <option class="mode_language" data-langid="9"value="c#">C#</option>
+                    <option class="mode_language" data-langid="3"value="java">Java</option>
+                    <option class="mode_language" data-langid="#"value="javascript">Javascript</option> 
+                    <option class="mode_language" data-langid="12"value="haskell">Haskell</option>    
+                    <option class="mode_language" data-langid="#"value="html mixed">HTML mixed</option>
+                    <option class="mode_language" data-langid="7"value="php">PHP</option>
+                    <option class="mode_language" data-langid="5"value="python">Python 2</option>
+                    <option class="mode_language" data-langid="8"value="ruby">Ruby</option>
+                    <option class="mode_language" data-langid="15"value="scala">Scala</option>
+                </select>
+                <select class="selectpicker  editor_keymap editorpanelbuttons pull-right" data-width="auto">
+                    <option class="mode_keymap" selected value="sublime">Sublime Text</option>
+                    <option class="mode_keymap" value="vim">Vim</option>
+                    <option class="mode_keymap" value="emacs">Emacs</option>
+                </select>
+            </div>
 
-//Syntax highlighting supported.
+            <div class="presentationmode" style="display:none">
+                <div class="presentationarea">
+                    <h4 class="h4">Give live presentations using InterviewHangouts</h4>
+                    <div><strong>
+                            Import Presentation from googledocs:
+                        </strong>
+                    </div>
+                    <div class="importfromgoogledocs">
+                        <p>
+                        Please note that to view presentation from google docs you should have your presentation uploaded to googledocs and have it published.</p><p> 
+                        If not follow the steps below or <a href="https://support.google.com/docs/answer/37579?hl=en" target="_blank">GoogleDocs help</a> for how to publish document from google docs. 
+                        </p>
+                        <p>1. Open your presentation in googledocs</p>
+                        <p>2. Click on file in the menu bar.</p>
+                        <p>3. Click on publish to web</p>
+                        <p>4. Click on publish and copy the link</p>
+                        <p>5. The link will look similar to this</p>
+                        <p>
+                            <i>
+                                <mark>https://docs.google.com/presentation/d/1KoABr8C0BB-r8T50pz6cUfL55Uk_8HPzZVryQjD4tXo/pub?start=false&loop=false&delayms=3000
+                                </mark>
+                            </i>
+                        </p>
+                        <p>6. After clicking <mark>Start</mark> the presentation will be loaded and broadcasted to all people in the room. And slides for others will automatically change once you change it.</p> 
+
+                        <label>Enter the link:</label>
+
+                        <div class="input-group input-group-md">    
+                            <input type="text" class="form-control docslink" placeholder="eg: https://docs.google.com/presentation/d/1KoABr8C0BB-r8T50pz6cUfL55Uk_8HPzZVryQjD4tXo/pub?start=false&loop=false&delayms=3000"><span class="input-group-btn"><button class="btn btn-md btn-success createpresentation">Start</button></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="editormode" >
+                <textarea id="editor-area" rows="200" >
+/*
+Code Writing area.
+Choose appropriate language for code running and 
+correct syntax highlighting.
+Default is C++
+Click "Run Code" to compile/interpret code.
+Run Code not supported for javascript and
+html mixed languages.
+*/
+
+//Syntax highlighting example:
 
 #include <stdio.h>
 
@@ -84,6 +133,7 @@ int main()
 return 0;
 }
             </textarea>
+            </div>
         </div>
 
          <!-- Video area -->
@@ -128,42 +178,6 @@ return 0;
         </div>
     </div>
 </div>
-    
-    <!-- Modal -->
-    <div id="editorModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Select Editor Options</h4>
-                    </div>
-                        <div class="row editor_option_row"><h4>Font:</h4></div>
-                            <select class="selectpicker editor_font" data-width="30%" >
-                                <option class="font_size" value="8">8px</option>
-                                <option class="font_size" value="9">9px</option>
-                                <option class="font_size" value="10">10px</option>
-                                <option class="font_size" value="11">11px</option>
-                                <option class="font_size" value="12">12px</option>
-                                <option class="font_size" value="13">13px</option>
-                                <option class="font_size" selected value="14">14px</option>
-                                <option class="font_size" value="15">15px</option>
-                                <option class="font_size" value="16">16px</option>
-                            </select>
-
-                        <div class="row editor_option_row"><h4>Key-Binding:</h4></div>
-                            <select class="selectpicker  editor_keymap" data-width="30%">
-                                <option class="mode_keymap" selected value="sublime">Sublime Text</option>
-                                <option class="mode_keymap" value="vim">Vim</option>
-                                <option class="mode_keymap" value="emacs">Emacs</option>
-                            </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
     <!-- Modal -->
     <div id="codeModal" class="modal fade" role="dialog">

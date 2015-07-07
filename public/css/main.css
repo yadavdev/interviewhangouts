@@ -283,3 +283,14 @@ body{
   -webkit-animation: ring 3s ease infinite;
   animation: ring 3s ease infinite;
 }
+
+
+.btn-sm{
+        border-radius: 0 !important;
+
+
+    }
+.editorpanelbuttons{
+        margin:0 !important;
+
+    }

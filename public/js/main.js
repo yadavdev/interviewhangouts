@@ -18,7 +18,10 @@ $(function(){
   });
   $(".code_output").val("#Output will be displayed here.#");
   $(".code_output").prop('disabled', true);
-  
+  $('.selectpicker').selectpicker({
+          style: 'btn-default btn-sm'
+      });       
+
 
   
   // Adjust Height of window depending on viewport height.
@@ -26,11 +29,40 @@ $(function(){
   var req_height= $(window).height() - $(".page-header").outerHeight(true);
 
   $(".user_box").css('height',req_height);
-  $(".CodeMirror").css('height',req_height-30);
+  $(".CodeMirror").css('height',req_height-60);
   $(".CodeMirror").css('border',"1px solid darkgrey");
-  $(".CodeMirror-gutters").css('height',req_height-30);
+  $(".CodeMirror-gutters").css('height',req_height-60);
   $("#video-container").css('height',req_height-20);
+  
+  $('.choosemode').click(function(){
+    if($('.choosemode').val()==="presentation"){
+      $('.editorpanelbuttons').hide();
+      $('.choosemode').val('codeeditor');
+      $('.choosemode').html('Back to Code Editor<span class="glyphicon glyphicon-chevron-right"></span>');
+    }
+    else{
+      $('.stoppresentation').hide();
+      $('.editorpanelbuttons:not(.selectpicker)').show();
+      $('.choosemode').val('presentation');
+      $('.choosemode').html('Switch to Presentation Mode<span class="glyphicon glyphicon-chevron-right"></span>');
 
+    }
+  });
+  
+  $('.createpresentation').click(function(){
+    var doc_id = $('.docslink').val();
+    doc_id = doc_id.replace('pub','embed');
+    $('.stoppresentation').show();
+    $('.presentationarea').hide();
+    $('.presentationmode').append('<iframe width="960" height="749" class="myframe" frameborder="0" style="width:100%" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'+doc_id+'">');
+    $('.myframe').css('height',req_height-60);
+  });
+  $('.stoppresentation').click(function(){
+        $('presentationmode:last-child', this).remove();
+        $('.presentationarea').show();
+        $('.stoppresentation').hide();
+    });
+  
   
   
   /*
@@ -165,10 +197,11 @@ $(function(){
     var req_height= $(window).height() - $(".page-header").outerHeight(true);
     
     $(".user_box").css('height',req_height);
-    $(".CodeMirror").css('height',req_height-30);
+    $(".CodeMirror").css('height',req_height-60);
     $(".CodeMirror").css('border',"1px solid darkgrey");
-    $(".CodeMirror-gutters").css('height',req_height-30);
+    $(".CodeMirror-gutters").css('height',req_height-60);
     $("#video-container").css('height',req_height-20);
+    $(".myframe").css('height',req_height-60);
   });
 
   // Handler for chat send on pressing enter key.
