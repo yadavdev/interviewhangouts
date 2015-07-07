@@ -35,6 +35,10 @@ $(function(){
   $("#video-container").css('height',req_height-20);
   
   $('.choosemode').click(function(){
+    
+    $('.presentationmode').toggle();
+    $('.editormode').toggle();
+
     if($('.choosemode').val()==="presentation"){
       $('.editorpanelbuttons').hide();
       $('.choosemode').val('codeeditor');
