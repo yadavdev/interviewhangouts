@@ -173,8 +173,15 @@ $(function(){
 
   //Chage in editor font
   
-  $(".editor_font").change(function() {
-    $(".CodeMirror").css("font-size",$(".editor_font").val() +"px");
+  $(".fontsizeup").click(function() {
+    var fontSize = parseInt($(".CodeMirror").css("font-size"));
+    fontSize = fontSize + 1 + "px";
+    $(".CodeMirror").css("font-size",fontSize);
+  });
+  $(".fontsizedown").click(function() {
+    var fontSize = parseInt($(".CodeMirror").css("font-size"));
+    fontSize = (fontSize - 1) + "px";
+    $(".CodeMirror").css("font-size",fontSize);
   });
 
   //Editor Code Submit
