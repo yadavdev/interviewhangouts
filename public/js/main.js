@@ -42,7 +42,7 @@ $(function(){
     if($('.choosemode').val()==="presentation"){
       $('.editorpanelbuttons').hide();
       $('.choosemode').val('codeeditor');
-      $('.choosemode').html('Back to Code Editor<span class="glyphicon glyphicon-chevron-right"></span>');
+      $('.choosemode').html('<span class="glyphicon glyphicon-chevron-left"></span> Back to Code Editor');
     }
     else{
       $('.stoppresentation').hide();
