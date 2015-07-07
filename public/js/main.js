@@ -28,11 +28,11 @@ $(function(){
   
   var req_height= $(window).height() - $(".page-header").outerHeight(true);
 
-  $(".user_box").css('height',req_height);
+  $(".user_box").css('height',req_height-3);
   $(".CodeMirror").css('height',req_height-60);
   $(".CodeMirror").css('border',"1px solid darkgrey");
   $(".CodeMirror-gutters").css('height',req_height-60);
-  $("#video-container").css('height',req_height-20);
+  $("#video-container").css('height',req_height-23);
   
   $('.choosemode').click(function(){
     
