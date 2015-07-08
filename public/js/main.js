@@ -339,10 +339,11 @@ socket.on('socket_id', function(id){
   my_socket_id=(id).replace(/[^a-z0-9]/gi,'');
   
   //Initialise peerjs video chat client with socket.io server id.
-  peer = new Peer(my_socket_id, {host: 'interviewhangouts.herokuapp.com', port:80, path: '/api'});//new Peer({ key: 'mil0ydkxb2qbmx6r', debug: 3});
+  peer = new Peer('interviewhangouts'+my_socket_id,{ key: 'mil0ydkxb2qbmx6r', debug: 3});//new Peer(my_socket_id, {host: 'interviewhangouts.herokuapp.com', port:80, path: '/api'});
 
   //Do nothing on connection from peerjs
   peer.on('open', function(){
+  alert(peer.id);
   });
 
   /*
@@ -561,6 +562,6 @@ function get_Peer_Id(peer_name){
   }
   $("#calling-peer").show();
   
-  var call = peer.call(user_online_array[id_found][1].replace(/[^a-z0-9]/gi,''), window.localStream);
+  var call = peer.call('interviewhangouts'+user_online_array[id_found][1].replace(/[^a-z0-9]/gi,''), window.localStream);
   step3(call);
 }
