@@ -343,7 +343,6 @@ socket.on('socket_id', function(id){
 
   //Do nothing on connection from peerjs
   peer.on('open', function(){
-  alert(peer.id);
   });
 
   /*
