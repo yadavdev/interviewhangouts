@@ -6,12 +6,14 @@ var io = require('socket.io')(http);
 //For creating Post requests 
 var unirest = require('unirest');
 
+//uncomment below line to use custom peerjs server
 //Peer Server Object
-var ExpressPeerServer = require('peer').ExpressPeerServer;
+//var ExpressPeerServer = require('peer').ExpressPeerServer;
 
-var options = {
-    debug: true
-}
+//uncomment below lines to use custom peerjs server.
+//var options = {
+//    debug: true
+//}
 
 //Enable CORS 
 app.use(function(req, res, next) {
@@ -24,8 +26,9 @@ app.use(function(req, res, next) {
 //Store user data in variable room
 var rooms = [];
 
+//uncomment below line to use custom peer server
 //Initialise peer server
-app.use('/api', ExpressPeerServer(http, options));
+//app.use('/api', ExpressPeerServer(http, options));
 
 
 app.use(express.static(__dirname + '/public/'));
