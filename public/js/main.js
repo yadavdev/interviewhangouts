@@ -454,9 +454,12 @@ socket.on("giveuser",function(msg){
 socket.on('socket_id', function(id){
   //Remove special characters from the socket id
   my_socket_id=(id).replace(/[^a-z0-9]/gi,'');
+  window.turnserversDotComAPI.iceServers(function(data) {
+    console.log(data);
   
+
   //Initialise peerjs video chat client with socket.io server id.
-  peer = new Peer('interviewhangouts'+my_socket_id,{ key: 'mil0ydkxb2qbmx6r', debug: 3});//new Peer(my_socket_id, {host: 'interviewhangouts.herokuapp.com', port:80, path: '/api'});
+  peer = new Peer('interviewhangouts'+my_socket_id,{ key: 'mil0ydkxb2qbmx6r', debug: 3,config:data});//new Peer(my_socket_id, {host: 'interviewhangouts.herokuapp.com', port:80, path: '/api'});
 
   //Do nothing on connection from peerjs
   peer.on('open', function(){
@@ -491,6 +494,7 @@ socket.on('socket_id', function(id){
             autoHide: false
           });
       }
+  });
   });
 
 });
