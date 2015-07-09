@@ -76,6 +76,7 @@ $(function(){
       socket.emit('presentation',{'site':0,'command':'start', 'link':doc_id});
     }
     else{
+      $('.create-googledocs-presentation').buttonLoader('stop');
       alert("Looks like the link is invalid.\n Please see the sample url and try again.")
     }
   });
@@ -104,6 +105,7 @@ $(function(){
       socket.emit('presentation',{'site':1,'command':'start', 'link':doc_id});
     }
     else{
+      $('.create-slideshare-private-presentation').buttonLoader('stop');
       alert("Looks like the link is invalid.\n Please see the sample url and try again.")
     }
     });
@@ -112,7 +114,7 @@ $(function(){
   $('.create-slideshare-public-presentation').click(function(){
     $(this).buttonLoader('start');
 
-    setTimeout(function(){ $('.create-slideshare-public-presentation').buttonLoader('stop'); }, 3000);
+    setTimeout(function(){ $('.create-slideshare-public-presentation').buttonLoader('stop'); }, 2000);
     var doc_id = $('.slidesharepubliclink').val();
     doc_id = $.trim(doc_id);
 
@@ -126,6 +128,7 @@ $(function(){
           socket.emit('presentation',{'site':2,'command':'start', 'link':doc_id});
       } 
       else{
+        $('.create-slideshare-public-presentation').buttonLoader('stop');
         alert("Looks like the link is invalid.\n Please see the sample url and try again.")
       }
   });
@@ -326,7 +329,31 @@ $(function(){
       $('.panel-body').scrollTop(scrolltoh);
     }
   });
-
+//Handlers for input field enter key press
+  $('.docslink').keypress(function(e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        $( ".create-googledocs-presentation" ).trigger( "click" );
+    }
+  });
+ $('.slidesharepubliclink').keypress(function(e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        $( ".create-slideshare-public-presentation" ).trigger( "click" );
+    }
+  });
+  $('.slideshareprivatelink').keypress(function(e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        $( ".create-slideshare-private-presentation" ).trigger( "click" );
+    }
+  });
+    $('.username').keypress(function(e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        $( ".EnterRoom" ).trigger( "click" );
+    }
+  });
   // End video call button
 
   $('#end-call').click(function(){
