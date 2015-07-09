@@ -80,35 +80,127 @@
             </div>
 
             <div class="presentationmode" style="display:none">
-                <div class="presentationarea" style="padding:2px 2px 2px 2px">
-                    <h4 class="h4">Give live presentations using InterviewHangouts</h4>
-                    <div><strong>
-                            Import Presentation from Google Docs:
-                        </strong>
+                <div class="presentationarea">
+                    <div class="selectpresentationsite">
+                        <h4 class="h4">Give live presentations along with video-chat using InterviewHangouts</h4>
+                        <div><strong>
+                                Import Presentation from:
+                            </strong>
+                        </div>
+                        <div class="text-center" style="padding-top:30px">
+                        <button class="btn btn-md btn-default choseslideshare"><img src="http://www.slideshare.net/images/logo/press-logos/slideshare_200x50.png" style="height:30px"></button> or <button class="btn btn-md btn-default chosegoogledocs"><img src="http://www.google.com/images/icons/product/presentations-32.png" style="height:30px"> Google Docs</button> 
+                        </div>
                     </div>
-                    <div class="importfromgoogledocs">
-                        <p>
-                        Please note that to view presentation from google docs you should have your presentation uploaded to Google Docs and have it published.</p><p> 
-                        If not, follow the steps below or <a href="https://support.google.com/docs/answer/37579?hl=en" target="_blank">GoogleDocs help</a> for how to publish a document to web in Google Docs. 
-                        </p>
-                        <p>1. Open your presentation in Google Docs</p>
-                        <p>2. Click on file in the menu bar.</p>
-                        <p>3. Click on publish to web</p>
-                        <p>4. Click on publish and copy the link</p>
-                        <p>5. The link will look similar to this</p>
-                        <p>
-                            <i>
-                                <mark>https://docs.google.com/presentation/d/1KoABr8C0BB-r8T50pz6cUfL55Uk_8HPzZVryQjD4tXo/pub?start=false&loop=false&delayms=3000
-                                </mark>
-                            </i>
-                        </p>
-                        <p>6. After clicking <mark>Start</mark> the presentation will be loaded and broadcasted to all people in the room. Slides for others will automatically change when the presenter changes his.</p> 
+
+                    <div class="fromgoogledocs" style="padding:2px 2px 2px 2px; display:none;overflow:auto">
+                        <div><strong>
+                                Import Presentation from Google Docs:
+                            </strong>
+                        </div>
+                        <div class="importfromgoogledocs">
+
+                            <p>
+                            Please note that to view presentation from google docs you should have your presentation uploaded to Google Docs and have it published.</p>
+                            
+                            <p> 
+                            If not, follow the steps below or <a href="https://support.google.com/docs/answer/37579?hl=en" target="_blank">GoogleDocs help</a> for how to publish a document to web in Google Docs. 
+                            </p>
+                            <p>1. Open your presentation in Google Docs</p>
+                            <p>2. Click on file in the menu bar.</p>
+                            <p>3. Click on publish to web</p>
+                            <p>4. Click on publish and copy the link</p>
+                            <p>5. The link will look similar to this</p>
+                            <p>
+                                <i>
+                                    <mark><small>https://docs.google.com/presentation/d/1KoABr8C0BB-r8T50pz6cUfL55Uk_8HPzZVryQjD4tXo/pub?start=false&loop=false&delayms=3000
+                                    </small></mark>
+                                </i>
+                            </p>
+                            <p>6. After clicking <mark>Start</mark> the presentation will be loaded and broadcasted to all people in the room. Slide change is manual for everyone as of now.</p> 
 
 
-                        <label>Enter the link:</label>
+                            <label>Enter the link:</label>
 
-                        <div class="input-group input-group-md">    
-                            <input type="text" class="form-control docslink" placeholder="eg: https://docs.google.com/presentation/d/1KoABr8C0BB-r8T50pz6cUfL55Uk_8HPzZVryQjD4tXo/pub?start=false&loop=false&delayms=3000"><span class="input-group-btn"><button class="btn btn-md btn-success createpresentation">Start</button></span>
+                            <div class="input-group input-group-md" style="padding:10px 10px 10px 20px">    
+                                <input type="text" class="form-control docslink" placeholder="eg: http://www.slideshare.net/hculver/10-ways-to-know-if-your-speech-sucks"><span class="input-group-btn"><button class="btn btn-md btn-success create-googledocs-presentation  has-spinner">Start</button></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fromslideshare" style="padding:2px 2px 2px 2px; display:none;overflow:auto">
+                        <div><strong>
+                                Import Presentation from Slideshare:
+                            </strong>
+                        </div>
+                        <div class="importfromslideshare">
+                            <p>
+                            Please note that to view presentation from slideshare you should have your presentation uploaded to slideshare with either as public or private.</p>
+                            <p>
+                            <button type="button" class="btn btn-warning btn-xs gobackslideshare" ><span class=" glyphicon glyphicon-chevron-left "></span>Go back</button>
+
+                            <button type="button" class="btn btn-warning btn-xs pull-right" data-toggle="collapse" data-target=".helpslideshare">need help<i class="fa fa-question"></i></button>
+                            <p>
+                                1. If your presentation is <mark>public</mark>. The link will look similar to this :
+                            </p>
+                                   <p>
+                                    <i>
+                                        <mark><small>http://www.slideshare.net/_your_user_name_/_your_slide_name
+                                        </small></mark>
+                                    </i>
+                                </p>
+
+                                <p>Example:</p>
+                                <p>
+                                    <i>
+                                        <mark><small>http://www.slideshare.net/hculver/10-ways-to-know-if-your-speech-sucks
+                                        </small></mark>
+                                    </i>
+                                </p>
+                                </p>
+
+                            <label>Enter the link in case of a public slide:</label>
+
+                            <div class="input-group input-group-md" style="padding:10px 10px 10px 20px">    
+                                <input type="text" class="form-control slidesharepubliclink" placeholder="eg: http://www.slideshare.net/hculver/10-ways-to-know-if-your-speech-sucks"><span class="input-group-btn"><button class="btn btn-md btn-success create-slideshare-public-presentation  has-spinner">Start</button></span>
+                            </div>
+                       <p>     2. If your presentation is <mark>private</mark>. The secret link to share with people will look similar to this :
+                       </p>
+                               <p>
+                                <i>
+                                    <mark><small>http://www.slideshare.net/secret/_your_secret_url</small>
+                                    </mark>
+                                </i>
+                            </p>
+                            <p>Example:</p>
+                            <p>
+                                <i>
+                                    <mark><small>http://www.slideshare.net/secret/3p9LCdkhmQrTHV
+                                    </small></mark>
+                                </i>
+                            </p>
+                            <div class="helpslideshare collapse">
+                            <p>To check if your slide was uploaded private or public or in case of private presentation, if you have not generated a <mark>secret url</mark> for sharing with people. Follow these steps.</p>
+                            <p>1. Login to your Slideshare account.</p>
+                            <p>2. Open your already uploaded presentation in slideshare either by clicking <mark>My Uploads</mark> or otherwise.</p>
+                            <p>3. Find and click the <mark>Edit</mark> option for the particular presentation and go to privacy settings tab.</p>
+                            <p>4. If presentation is marked public simply copy the link from the browser address bar and enter it in the public link section and proceed.</p>
+                            <p>If presentation is marked private: </p>
+                            <p>5. In option <mark>Who can view(on slideshare)</mark> change <mark>Only Me</mark> to <mark>People with the secret link</mark> </p>
+                            <p>6. In option <mark>Allow Embeds</mark> choose <mark>Anywhere</mark>.</p>
+                            <p>7. Click on <mark>Update</mark> to update the privacy settings. Now copy the <mark>secret link</mark> from option <mark>Who can view</mark></p>
+
+                            <p>The link will look similar to this:</p>
+                            <p>    <i>
+                                    <mark><small>http://www.slideshare.net/secret/3p9LCdkhmQrTHV
+                                    </small></mark>
+                                </i>
+                            </p>
+                            </div>
+                            <label>Enter the secret link:</label>
+
+                            <div class="input-group input-group-md" style="padding:10px 10px 10px 20px">    
+                                <input type="text" class="form-control slideshareprivatelink" placeholder="eg: http://www.slideshare.net/secret/3p9LCdkhmQrTHV"><span class="input-group-btn"><button class="btn btn-md btn-success create-slideshare-private-presentation  has-spinner">Start</button></span>
+                            </div>
                         </div>
                     </div>
                 </div>

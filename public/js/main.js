@@ -33,13 +33,17 @@ $(function(){
   $(".CodeMirror").css('border',"1px solid darkgrey");
   $(".CodeMirror-gutters").css('height',req_height-60);
   $("#video-container").css('height',req_height-23);
-  
+  $(".fromgoogledocs").css('height',req_height-60);
+  $(".fromslideshare").css('height',req_height-60);
+
   $('.choosemode').click(function(){
     
     $('.presentationmode').toggle();
     $('.editormode').toggle();
 
     if($('.choosemode').val()==="presentation"){
+      if(ispresentationrunning===true)
+        $('.stoppresentation').show();
       $('.editorpanelbuttons').hide();
       $('.choosemode').val('codeeditor');
       $('.choosemode').html('<span class="glyphicon glyphicon-chevron-left"></span> Back to Code Editor');
@@ -53,24 +57,107 @@ $(function(){
     }
   });
   
-  $('.createpresentation').click(function(){
+  $('.create-googledocs-presentation').click(function(){
+    $(this).buttonLoader('start');
+
+    setTimeout(function(){ $('.create-googledocs-presentation').buttonLoader('stop'); }, 15000);
+    
     var doc_id = $('.docslink').val();
+    doc_id = $.trim(doc_id);
+    
+    if (!doc_id.match(/^[a-zA-Z]+:\/\//)){
+      doc_id = 'https://' + doc_id;
+    }
+    
     doc_id = doc_id.replace('pub','embed');
-    $('.stoppresentation').show();
-    $('.presentationarea').hide();
-    $('.presentationmode').append('<div class="presentationframe"><iframe width="960" height="749" class="myframe" frameborder="0" style="width:100%" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'+doc_id+'"></div>');
-    $('.myframe').css('height',req_height-60);
-    socket.emit('presentation',{'command':'start', 'link':doc_id});
+    var a = $('<a>', { href:doc_id } )[0];
+    
+    if(a.hostname ==="docs.google.com" || a.hostname==="www.docs.google.com" ){
+      socket.emit('presentation',{'site':0,'command':'start', 'link':doc_id});
+    }
+    else{
+      alert("Looks like the link is invalid.\n Please see the sample url and try again.")
+    }
   });
-  $('.stoppresentation').click(function(){
-        $('.presentationframe').remove();
-        $('.presentationarea').show();
-        $('.stoppresentation').hide();
-        socket.emit('presentation',{'command':'stop', 'link':''});
+
+  $('.create-slideshare-private-presentation').click(function(){    
+    $(this).buttonLoader('start');
+
+    setTimeout(function(){ $('.create-slideshare-private-presentation').buttonLoader('stop'); }, 1000);
+    
+    var doc_id = $('.slideshareprivatelink').val();
+    doc_id = $.trim(doc_id);
+    
+    if (!doc_id.match(/^[a-zA-Z]+:\/\//)){
+      doc_id = 'https://' + doc_id;
+    }
+    var a = $('<a>', { href:doc_id } )[0];
+    if((a.hostname ==="slideshare.net" || a.hostname ==="www.slideshare.net") && doc_id.toLowerCase().indexOf("secret")>=0){
+      ispresentationrunning = true;
+      doc_id = a.pathname;
+      doc_id = doc_id.split("/");
+      doc_id = doc_id[2];
+      $('.stoppresentation').show();
+      $('.fromslideshare').hide();
+      $('.presentationmode').append('<div class="presentationframe"><iframe class="myframe" src="https://www.slideshare.net/slideshow/embed_code/key/'+doc_id+'" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px;width: 100%;" allowfullscreen> </iframe></div>');
+      $('.myframe').css('height',req_height-60);
+      socket.emit('presentation',{'site':1,'command':'start', 'link':doc_id});
+    }
+    else{
+      alert("Looks like the link is invalid.\n Please see the sample url and try again.")
+    }
     });
   
-  
-  
+
+  $('.create-slideshare-public-presentation').click(function(){
+    $(this).buttonLoader('start');
+
+    setTimeout(function(){ $('.create-slideshare-public-presentation').buttonLoader('stop'); }, 3000);
+    var doc_id = $('.slidesharepubliclink').val();
+    doc_id = $.trim(doc_id);
+
+    if (!doc_id.match(/^[a-zA-Z]+:\/\//)){
+      doc_id = 'http://' + doc_id;
+    }
+
+    var a = $('<a>', { href:doc_id } )[0];
+
+    if(a.hostname ==="slideshare.net" || a.hostname ==="www.slideshare.net"){
+          socket.emit('presentation',{'site':2,'command':'start', 'link':doc_id});
+      } 
+      else{
+        alert("Looks like the link is invalid.\n Please see the sample url and try again.")
+      }
+  });
+
+  $('.chosegoogledocs').click(function(){
+      $('.selectpresentationsite').hide();
+      $('.fromgoogledocs').show();
+  });
+  $('.gobackgoogledocs').click(function(){
+      $('.selectpresentationsite').show();
+      $('.fromgoogledocs').hide();
+  });
+  $('.gobackslideshare').click(function(){
+      $('.selectpresentationsite').show();
+      $('.fromslideshare').hide();
+  });
+  $('.choseslideshare').click(function(){
+      $('.selectpresentationsite').hide();
+      $('.fromslideshare').show();
+  });
+
+  $('.stoppresentation').click(function(){
+        $('.create-googledocs-presentation').buttonLoader('stop');
+        $('.create-slideshare-private-presentation').buttonLoader('stop');
+        $('.create-slideshare-public-presentation').buttonLoader('stop')
+        ispresentationrunning = false;
+        $('.presentationframe').remove();
+        $('.selectpresentationsite').show();
+        $('.stoppresentation').hide();
+        socket.emit('presentation',{'site':0,'command':'stop', 'link':''});
+    });
+    
   /*
   ##################################################################################################
     Different Event Handlers Code.
@@ -214,6 +301,8 @@ $(function(){
     $(".CodeMirror").css('border',"1px solid darkgrey");
     $(".CodeMirror-gutters").css('height',req_height-60);
     $("#video-container").css('height',req_height-20);
+    $(".fromgoogledocs").css('height',req_height-60);
+    $(".fromslideshare").css('height',req_height-60);
     $(".myframe").css('height',req_height-60);
   });
 
@@ -313,6 +402,7 @@ user="";
 //user's socket.io server side socket.id to be used as peerjs video chat id
 my_socket_id ="";
 
+ispresentationrunning = false;
 //Compatiability Shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
@@ -382,6 +472,20 @@ socket.on('socket_id', function(id){
 //Receive Editor content from other users in the room.
 socket.on("Edit_Response", function(msg){
   editor.setValue(msg);
+});
+socket.on("server_msg", function(msg){
+        ispresentationrunning=true;
+       $('.stoppresentation').show();
+       $('.fromgoogledocs').hide();
+       $('.fromslideshare').hide();
+       if(msg.site===0)
+          var imgurl="http://www.google.com/images/icons/product/presentations-64.png";
+       else 
+          var imgurl = "http://www.slideshare.net/images/logo/press-logos/slideshare_200x50.png";
+
+       var error = '<div class="myframe"><div class="image text-center"><img src="'+imgurl+' " style="padding-top:20px;"></div><h1 class="h1 text-center">'+msg.code+'</h1><p class="lead">Sorry! We could not find what you were looking for :(</p><p>Things you can do:</p><p>1. Check if the url is correct.</p><p>2. Check if the file exists and necessary conditions to publish/share are provided. </p><p>3. Check <mark>need help?</mark> in case of Slideshare errors and the provided help link in case of Google Docs.</p><p>4. Check the url to see that it matches with the sample url</p><p>5. Try Again</p></div>'
+       $('.presentationmode').append('<div class="presentationframe">'+error+'</div>');
+       $('.myframe').css('height',$(".CodeMirror").css('height'));
 });
 
 socket.on("usertyping", function(typinguser){
@@ -460,13 +564,51 @@ socket.on('presentation', function(data){
   
   if(data.command==='start'){
     var frameid = data.link;
-    $('.presentationarea').hide();
-    $('.presentationmode').append('<div class="presentationframe"><iframe width="960" height="749" class="myframe" frameborder="0" style="width:100%" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'+frameid+'"></div>');
-    $('.myframe').css('height',$(".CodeMirror").css('height'));
-    $("#freeow").freeow("PowerPoint Presentation", data.presenter+' has started a presentation. Please click "switch to presentation mode" to view it.', {
-        classes: ["smokey", "pushpin"],
-        autoHide: false
-      });
+    if(data.site==0){
+      if(user===data.presenter){
+            ispresentationrunning = true;
+            $('.stoppresentation').show();
+            $('.fromgoogledocs').hide();
+            $('.create-googledocs-presentation').buttonLoader('stop');
+          }
+      else{
+            $('.presentationarea').hide();
+            $("#freeow").freeow("PowerPoint Presentation", data.presenter+' has started a presentation. Please click "switch to presentation mode" to view it.', {
+                classes: ["smokey", "pushpin"],
+                autoHide: 8000
+              });
+          }
+      $('.presentationmode').append('<div class="presentationframe"><iframe width="960" height="749" class="myframe" frameborder="0" style="width:100%" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'+frameid+'"></div>');
+      $('.myframe').css('height',$(".CodeMirror").css('height'));
+    }
+    else if(data.site==2){
+          if(user===data.presenter){
+            ispresentationrunning = true;
+            $('.stoppresentation').show();
+            $('.fromslideshare').hide();
+            $('.create-slideshare-public-presentation').buttonLoader('stop');
+          }
+          else{
+             $('.presentationarea').hide();
+             $("#freeow").freeow("PowerPoint Presentation", data.presenter+' has started a presentation. Please click "switch to presentation mode" to view it.', {
+                classes: ["smokey", "pushpin"],
+                autoHide: 8000
+              });
+          }
+          $('.presentationmode').append('<div class="presentationframe"><iframe class="myframe" src="https://www.slideshare.net/slideshow/embed_code/key/'+frameid+'" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px;width: 100%;" allowfullscreen> </iframe></div>');
+          $('.myframe').css('height',$(".CodeMirror").css('height'));
+        }
+        else if(data.site===1){
+                $('.presentationarea').hide();
+                $('.presentationmode').append('<div class="presentationframe"><iframe class="myframe" src="https://www.slideshare.net/slideshow/embed_code/key/'+frameid+'" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px;width: 100%;" allowfullscreen> </iframe></div>');
+                $('.myframe').css('height',$(".CodeMirror").css('height'));
+                $("#freeow").freeow("PowerPoint Presentation", data.presenter+' has started a presentation. Please click "switch to presentation mode" to view it.', {
+                    classes: ["smokey", "pushpin"],
+                    autoHide: 8000
+                  });
+
+        }
+
   }
   else if(data.command==='stop'){
         $('.presentationframe').remove();

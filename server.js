@@ -147,8 +147,39 @@ io.on('connection', function(socket){
 
   //load presentation
   socket.on('presentation', function(link){
-    socket.broadcast.to(socket.room).emit('presentation',{'command':link.command,'link':link.link, 'presenter':socket.user});
-  });
+    if(link.command==='start'){
+      if(link.site===1)
+        socket.broadcast.to(socket.room).emit('presentation',{'site':link.site,'command':link.command,'link':link.link, 'presenter':socket.user});
+   
+      else if(link.site===2){
+              unirest.get("http://www.slideshare.net/api/oembed/2?url="+link.link+"&format=json")
+                    .header("Accept", "json")
+              .end(function (result) {
+                  if(result.status===200){
+                    io.sockets.in(socket.room).emit('presentation',{'site':link.site,'command':link.command,'link':result.body.html.match(/.*\/key\/([0-9a-zA-Z]*).*/)[1], 'presenter':socket.user});
+                  }
+                  else{
+                    io.to(socket.id).emit('server_msg',{'code':result.status,'site':link.site});
+                  }
+              });
+
+          }
+          else if(link.site==0){
+                  unirest.get(link.link)
+                    .header("Accept", "text/html")
+              .end(function (result) {
+                  if(result.status===200){
+                    io.sockets.in(socket.room).emit('presentation',{'site':link.site,'command':link.command,'link':link.link, 'presenter':socket.user});
+                  }
+                  else{
+                      io.to(socket.id).emit('server_msg',{'code':result.status,'site':link.site});
+                  }
+              });
+          }
+      }
+      else socket.broadcast.to(socket.room).emit('presentation',{'site':link.site,'command':link.command,'link':link.link, 'presenter':socket.user});
+   
+     });
   /*
       Receive code running request.
       Send data to hackerrank api using unirest.
