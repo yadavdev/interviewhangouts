@@ -17,8 +17,10 @@ $(function(){
       
       	roomid = roomid.slice(-10);
       
-      	if(/[^a-zA-Z0-9]/.test( roomid ))
+      	if(/[^a-zA-Z0-9]/.test( roomid )){
+      		roomid = "";
       		alert("Please enter a valid link or 10 character long roomid.\n Eg.Fcer9vtsre");
+      	}
       	
       	else
 			window.location.href = window.location +roomid;
