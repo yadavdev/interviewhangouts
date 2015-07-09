@@ -40,7 +40,12 @@ app.get('/:roomName', function(req, res){
   res.sendFile(__dirname +'/public/chat.html');
 
 });
+app.get('/:roomName/', function(req, res){
+  
+  activeChat = req.params.roomName;
+  res.sendFile(__dirname +'/public/chat.html');
 
+});
 //Socket.io on connection event
 
 io.on('connection', function(socket){
